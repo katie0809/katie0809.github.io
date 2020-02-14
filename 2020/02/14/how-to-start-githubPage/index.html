@@ -17,13 +17,14 @@
 <meta property="og:site_name" content="Dailycrush">
 <meta property="og:description" content="온갖 블로그 사이트를 전전하다가 드디어 뭔가 쌈박한 친구를 발견했다…드디어 나는 정착할 블로그를 찾은 것인가..?!">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://katie0809.github.io/images/og_image.png">
+<meta property="og:image" content="https://katie0809.github.io/image/Elegant_Background-3.jpg">
 <meta property="article:published_time" content="2020-02-14T02:20:38.000Z">
-<meta property="article:modified_time" content="2020-02-14T04:55:41.735Z">
+<meta property="article:modified_time" content="2020-02-14T07:18:21.555Z">
 <meta property="article:author" content="Kyungim Lee">
-<meta property="article:tag" content="githubpage, hexo">
+<meta property="article:tag" content="githubpage">
+<meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://katie0809.github.io/images/og_image.png">
+<meta name="twitter:image" content="https://katie0809.github.io/image/Elegant_Background-3.jpg">
 
 
 
@@ -75,7 +76,7 @@
 
 <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="is-3-column">
+<body class="is-2-column">
     <nav class="navbar navbar-main">
     <div class="container">
         <div class="navbar-brand is-flex-center">
@@ -134,8 +135,14 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
 <div class="card">
+    
+    <div class="card-image">
+        <span  class="image is-7by1">
+            <img class="thumbnail" src="/image/Elegant_Background-3.jpg" alt="GithubPage 세팅하기">
+        </span>
+    </div>
     
     <div class="card-content article ">
         
@@ -151,7 +158,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2분 소요 (약 230 글자)
+                    5분 소요 (약 701 글자)
                 </span>
                 
                 
@@ -193,13 +200,39 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 
 
+
+<hr>
+<h2 id="기타-팁"><a href="#기타-팁" class="headerlink" title="기타 팁"></a>기타 팁</h2><ul>
+<li>생각보다 시간이 오래 걸린다. 세팅하고 익숙해지는데에 거의 반나절이 걸렸다.</li>
+<li>hexo deploy로 새 글을 발행하는 경우 내 깃헙페이지를 관리하는 실제 레포지토리에는 완성된 글/글과 관련된 블로그 파일들만 올라간다. </li>
+<li>여튼 무슨소리냐면 <strong>내가 로컬에서 글 쓰는 환경</strong> 그 자체는 업로드되지 않는다는 얘기다.</li>
+<li>따라서 내가 글쓰는 환경은 따로 백업을 해줘야하는데 이게 또 글 쓰는 폴더 내의 themes 폴더는 다 별도의 깃헙 레포라서 그냥 통으로 올리면 제대로 백업이 안된다.</li>
+<li><a href="https://mishka.kr/2019/06/13/backup/">https://mishka.kr/2019/06/13/backup/</a> 이분이 굉장히 잘 설명해주심.<ol>
+<li>내 원격 레포를 두개 만든다. 하나는 블로그 쓰는환경 전체파일 백업용(레포1), 다른 하나는 테마 폴더만 백업용(레포2)</li>
+<li>테마 폴더의 원격 저장소 위치를 내 원격레포1로 변경해두고 커밋</li>
+<li>테마 폴더를 지우고 나머지 블로그 글쓰는 환경 폴더를 깃 레포로 만든다.</li>
+<li>테마 폴더를 submodule로 현재 로컬 레포에 추가한다.</li>
+<li>블로그 전체 글쓰는 환경 폴더를 원격레포2로 전체 커밋</li>
+<li>이후 테마가 추가되면 git submodule add로 추가해준다. 테마 관련 설정이 변경돼도 이렇게 해주면 될 듯.</li>
+</ol>
+</li>
+</ul>
+<p><strong>Warning</strong> 로컬 테마폴더의 깃 레포 url을 바꾸지 않으면 기존 icarus  레포에 푸시를 하게 된다!!ㅋㅋ.. 대담한 한국인이 되고싶다면 시도해볼것..</p>
+<ul>
+<li><p>마크다운 에디터가 있으면 편할 것 같아서 또 서치를 했다.</p>
+<ul>
+<li>Typora 로 현재 작성중. 가볍고 심플하니 나쁘지 않다.</li>
+</ul>
+</li>
+</ul>
+
         </div>
         
         <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/githubpage-hexo/" rel="tag">githubpage, hexo</a>
+                    <a class="has-link-grey -link" href="/tags/githubpage/" rel="tag">githubpage</a>, <a class="has-link-grey -link" href="/tags/hexo/" rel="tag">hexo</a>
                 </div>
             </div>
         </div>
@@ -255,11 +288,42 @@
 </div>
 </div>
                 
+                
 
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    목차
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#참고한-사이트">
+        <span class="has-mr-6">1</span>
+        <span>참고한 사이트</span>
+        </a></li><li>
+        <a class="is-flex" href="#Default-Guide">
+        <span class="has-mr-6">2</span>
+        <span>Default Guide</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Hexo-명령어">
+        <span class="has-mr-6">2.1</span>
+        <span>Hexo 명령어</span>
+        </a></li><li>
+        <a class="is-flex" href="#기타-팁">
+        <span class="has-mr-6">2.2</span>
+        <span>기타 팁</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
     
         
 <div class="card widget">
@@ -296,235 +360,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/githubpage-hexo/" style="font-size: 10px;">githubpage, hexo</a>
-    </div>
-</div>
-    
-        <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                Tags
-            </h3>
-            <div class="field is-grouped is-grouped-multiline">
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/githubpage-hexo/">
-                        <span class="tag">githubpage, hexo</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</div>
-    
-    
-        <div class="column-right-shadow is-hidden-widescreen ">
-        
-            
-
-    <div class="card widget" id="toc">
-        <div class="card-content">
-            <div class="menu">
-                <h3 class="menu-label">
-                    목차
-                </h3>
-                <ul class="menu-list"><li>
-        <a class="is-flex" href="#참고한-사이트">
-        <span class="has-mr-6">1</span>
-        <span>참고한 사이트</span>
-        </a></li><li>
-        <a class="is-flex" href="#Default-Guide">
-        <span class="has-mr-6">2</span>
-        <span>Default Guide</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#Hexo-명령어">
-        <span class="has-mr-6">2.1</span>
-        <span>Hexo 명령어</span>
-        </a></li></ul></li></ul>
-            </div>
-        </div>
-    </div>
-
-        
-            <div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            최근 글
-        </h3>
-        
-        <article class="media">
-            
-            <a href="/2020/02/14/how-to-start-githubPage/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="GithubPage 세팅하기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-14T02:20:38.000Z">2020-02-14</time></div>
-                    <a href="/2020/02/14/how-to-start-githubPage/" class="title has-link-black-ter is-size-6 has-text-weight-normal">GithubPage 세팅하기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/">그냥 그런 일상</a> / <a class="has-link-grey -link" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/%EB%81%84%EC%A0%81%EB%81%84%EC%A0%81/">끄적끄적</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/02/14/hello-world/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hello World">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-14T01:32:22.792Z">2020-02-14</time></div>
-                    <a href="/2020/02/14/hello-world/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hello World</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-    </div>
-</div>
-        
-            <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-        <h3 class="menu-label">
-            Archives
-        </h3>
-        <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2020/02/">
-                <span class="level-start">
-                    <span class="level-item">2월 2020</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">2</span>
-                </span>
-            </a>
-        </li>
-        
-        </ul>
-        </div>
-    </div>
-</div>
-        
-        </div>
-    
-</div>
-
-                
-
-
-
-
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
-    
-        
-
-    <div class="card widget" id="toc">
-        <div class="card-content">
-            <div class="menu">
-                <h3 class="menu-label">
-                    목차
-                </h3>
-                <ul class="menu-list"><li>
-        <a class="is-flex" href="#참고한-사이트">
-        <span class="has-mr-6">1</span>
-        <span>참고한 사이트</span>
-        </a></li><li>
-        <a class="is-flex" href="#Default-Guide">
-        <span class="has-mr-6">2</span>
-        <span>Default Guide</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#Hexo-명령어">
-        <span class="has-mr-6">2.1</span>
-        <span>Hexo 명령어</span>
-        </a></li></ul></li></ul>
-            </div>
-        </div>
-    </div>
-
-    
-        <div class="card widget">
-    <div class="card-content">
-        <h3 class="menu-label">
-            최근 글
-        </h3>
-        
-        <article class="media">
-            
-            <a href="/2020/02/14/how-to-start-githubPage/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="GithubPage 세팅하기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-14T02:20:38.000Z">2020-02-14</time></div>
-                    <a href="/2020/02/14/how-to-start-githubPage/" class="title has-link-black-ter is-size-6 has-text-weight-normal">GithubPage 세팅하기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/">그냥 그런 일상</a> / <a class="has-link-grey -link" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/%EB%81%84%EC%A0%81%EB%81%84%EC%A0%81/">끄적끄적</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/02/14/hello-world/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hello World">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-14T01:32:22.792Z">2020-02-14</time></div>
-                    <a href="/2020/02/14/hello-world/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hello World</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-    </div>
-</div>
-    
-        <div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-        <h3 class="menu-label">
-            Archives
-        </h3>
-        <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2020/02/">
-                <span class="level-start">
-                    <span class="level-item">2월 2020</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">2</span>
-                </span>
-            </a>
-        </li>
-        
-        </ul>
-        </div>
+        <a href="/tags/githubpage/" style="font-size: 10px;">githubpage</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
     </div>
 </div>
     
