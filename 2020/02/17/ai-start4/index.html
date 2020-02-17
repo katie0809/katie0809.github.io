@@ -7,24 +7,26 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>GithubPage 세팅하기 - Dailycrush</title>
+<title>[딥러닝 기초] Logistic Regression - Dailycrush</title>
 
 
-    <meta name="description" content="온갖 블로그 사이트를 전전하다가 드디어 뭔가 쌈박한 친구를 발견했다…드디어 나는 정착할 블로그를 찾은 것인가..?!">
+    <meta name="description" content="다음의 책을 공부하며 정리한 내용입니다  https:&#x2F;&#x2F;wikidocs.net&#x2F;book&#x2F;2788  로지스틱 회귀란: 로지스틱 회귀는 이진분류(Binary Classification) 문제의 해결에 사용되는 대표적인 알고리즘.  이름은 ‘회귀‘이지만 ‘분류‘에 쓰인다">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GithubPage 세팅하기">
-<meta property="og:url" content="https://katie0809.github.io/2020/02/14/how-to-start-githubPage/index.html">
+<meta property="og:title" content="[딥러닝 기초] Logistic Regression">
+<meta property="og:url" content="https://katie0809.github.io/2020/02/17/ai-start4/index.html">
 <meta property="og:site_name" content="Dailycrush">
-<meta property="og:description" content="온갖 블로그 사이트를 전전하다가 드디어 뭔가 쌈박한 친구를 발견했다…드디어 나는 정착할 블로그를 찾은 것인가..?!">
+<meta property="og:description" content="다음의 책을 공부하며 정리한 내용입니다  https:&#x2F;&#x2F;wikidocs.net&#x2F;book&#x2F;2788  로지스틱 회귀란: 로지스틱 회귀는 이진분류(Binary Classification) 문제의 해결에 사용되는 대표적인 알고리즘.  이름은 ‘회귀‘이지만 ‘분류‘에 쓰인다">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://katie0809.github.io/images/og_image.png">
-<meta property="article:published_time" content="2020-02-14T02:20:38.000Z">
-<meta property="article:modified_time" content="2020-02-17T00:00:18.403Z">
+<meta property="og:image" content="https://katie0809.github.io/image/Elegant_Background-2.jpg">
+<meta property="article:published_time" content="2020-02-17T00:49:43.000Z">
+<meta property="article:modified_time" content="2020-02-17T01:05:04.148Z">
 <meta property="article:author" content="Kyungim Lee">
-<meta property="article:tag" content="githubpage">
-<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="pytorch">
+<meta property="article:tag" content="딥러닝기초">
+<meta property="article:tag" content="로지스틱 회귀">
+<meta property="article:tag" content="logistic regression">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://katie0809.github.io/images/og_image.png">
+<meta name="twitter:image" content="https://katie0809.github.io/image/Elegant_Background-2.jpg">
 
 
 
@@ -82,7 +84,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="GithubPage 세팅하기" height="28">
+                <img src="/images/logo.svg" alt="[딥러닝 기초] Logistic Regression" height="28">
             
             </a>
         </div>
@@ -138,21 +140,27 @@
                 <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
 <div class="card">
     
+    <div class="card-image">
+        <span  class="image is-7by1">
+            <img class="thumbnail" src="/image/Elegant_Background-2.jpg" alt="[딥러닝 기초] Logistic Regression">
+        </span>
+    </div>
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-14T02:20:38.000Z">2020-02-14</time>
+                <time class="level-item has-text-grey" datetime="2020-02-17T00:49:43.000Z">2020-02-17</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/">그냥 그런 일상</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/%EB%81%84%EC%A0%81%EB%81%84%EC%A0%81/">끄적끄적</a>
+                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">인공지능</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    6분 소요 (약 973 글자)
+                    5분 소요 (약 804 글자)
                 </span>
                 
                 
@@ -161,91 +169,102 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                GithubPage 세팅하기
+                [딥러닝 기초] Logistic Regression
             
         </h1>
         <div class="content">
-            <p>온갖 블로그 사이트를 전전하다가 드디어 뭔가 쌈박한 친구를 발견했다…<br>드디어 나는 정착할 블로그를 찾은 것인가..?!</p>
+            <p>다음의 책을 공부하며 정리한 내용입니다</p>
+<ul>
+<li><a href="https://wikidocs.net/book/2788">https://wikidocs.net/book/2788</a></li>
+</ul>
+<h2 id="로지스틱-회귀란"><a href="#로지스틱-회귀란" class="headerlink" title="로지스틱 회귀란"></a>로지스틱 회귀란</h2><p>: 로지스틱 회귀는 <code>이진분류</code>(Binary Classification) 문제의 해결에 사용되는 대표적인 알고리즘.</p>
+<blockquote>
+<p>이름은 ‘<strong>회귀</strong>‘이지만 ‘<code>분류</code>‘에 쓰인다</p>
+</blockquote>
 <a id="more"></a>
 
-<h1 id="참고한-사이트"><a href="#참고한-사이트" class="headerlink" title="참고한 사이트"></a>참고한 사이트</h1><ul>
-<li><a href="https://pages.github.com/">https://pages.github.com/</a> : GithubPage Official Guide</li>
-<li><a href="https://www.holaxprogramming.com/2017/04/16/github-page-and-hexo/">https://www.holaxprogramming.com/2017/04/16/github-page-and-hexo/</a> : GithubPage와 Hexo 설치하기</li>
-<li><a href="https://blog.zhangruipeng.me/hexo-theme-icarus/">https://blog.zhangruipeng.me/hexo-theme-icarus/</a> : Hexo Official Guide Blog</li>
-<li><a href="https://github.com/ppoffice/hexo-theme-icarus">https://github.com/ppoffice/hexo-theme-icarus</a> : Hexo Official Github</li>
-<li><a href="https://alleyful.github.io/categories/Tools/Hexo/">https://alleyful.github.io/categories/Tools/Hexo/</a> : Hexo 설치하기</li>
-<li><a href="https://guides.github.com/features/mastering-markdown/">https://guides.github.com/features/mastering-markdown/</a> : Markdown 마스터하기</li>
-<li><a href="https://swtpumpkin.github.io/git/hexo/hexoImg/">https://swtpumpkin.github.io/git/hexo/hexoImg/</a> : Hexo 이미지 올리기</li>
-<li><a href="https://mishka.kr/2019/06/10/hexo-writing/">https://mishka.kr/2019/06/10/hexo-writing/</a> : Hexo 글쓰기</li>
+<h3 id="이진분류의-모델"><a href="#이진분류의-모델" class="headerlink" title="이진분류의 모델"></a>이진분류의 모델</h3><table>
+<thead>
+<tr>
+<th>점수(x)</th>
+<th>결과(y)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>45</td>
+<td>불합격</td>
+</tr>
+<tr>
+<td>50</td>
+<td>불합격</td>
+</tr>
+<tr>
+<td>55</td>
+<td>불합격</td>
+</tr>
+<tr>
+<td>60</td>
+<td>합격</td>
+</tr>
+<tr>
+<td>65</td>
+<td>합격</td>
+</tr>
+<tr>
+<td>70</td>
+<td>합격</td>
+</tr>
+</tbody></table>
+<p>위와 같은 데이터가 있다고 하자.</p>
+<p>조건은 아래와 같다.</p>
+<ul>
+<li>합격 커트라인은 알려져있지 않다</li>
+<li>임의의 점수 x의 합격여부를 예측하고 싶다.</li>
 </ul>
-<h1 id="Default-Guide"><a href="#Default-Guide" class="headerlink" title="Default Guide"></a>Default Guide</h1><h2 id="Hexo-명령어"><a href="#Hexo-명령어" class="headerlink" title="Hexo 명령어"></a>Hexo 명령어</h2><ol>
-<li>새 테마 적용<br>: 새 테마 적용시에 일단 한번 클린 후 deploy</li>
+<p>이 경우 주어진 데이터에 대해 합격(1), 불합격(0)으로 그래프를 그리면 아래와 같이 표현할 수 있다.</p>
+<p><img src="https://wikidocs.net/images/page/22881/%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1%ED%9A%8C%EA%B7%80.PNG" alt="대체 텍스트"></p>
+<p>위의 간단한 예시를 통해 <strong>이진분류의 문제를 풀기위한 x, y의 관계</strong>는 <code>S 형태의 그래프</code>로 나타내야 함을 알 수 있다.</p>
+<p>따라서 다음과 같은 결론을 얻을 수 있다.</p>
+<ol>
+<li>로지스틱 회귀의 가설은 선형 회귀 때의 <u>H(x)=Wx+b가 아니다</u>.</li>
+<li>위처럼 <code>S자 모양의 그래프</code>를 만들 수 있는 <code>어떤 특정 함수 f</code>를 추가적으로 사용하여 <code>H(x)=f(Wx+b)의 가설을 사용</code>한다.</li>
+<li>어떤 함수 f는 이미 널리 알려져있다. =&gt; <code>시그모이드 함수</code></li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo deploy --generate</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>새 글쓰기<br>: <a href="https://mishka.kr/2019/06/10/hexo-writing/">https://mishka.kr/2019/06/10/hexo-writing/</a> 링크를 꼭 참고한다.</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># layout은 post(default), draft, page가 있다.</span></span><br><span class="line">hexo new [layout] &lt;post_name&gt;</span><br><span class="line">hexo deploy --generate</span><br><span class="line"></span><br><span class="line"><span class="comment"># draft로 작성시 publish 명령어 사용</span></span><br><span class="line">hexo publish [layout] &lt;post_name&gt;</span><br></pre></td></tr></table></figure>
-
+<p>즉, 로지스틱 회귀의 가설이자 이진분류 문제를 풀기위한 함수 f는 <code>Sigmoid function</code>이다</p>
+<h3 id="Sigmoid"><a href="#Sigmoid" class="headerlink" title="Sigmoid"></a>Sigmoid</h3><ul>
+<li>수식</li>
+</ul>
 <blockquote>
-<p><em>submodule update</em>를 하는경우 theme폴더 내의 <code>_config.yml</code>파일이 지워지는 문제가 있다. 해당 파일은 항상 백업해두어야 한다ㅠ</p>
+<p> H(x)=sigmoid(Wx+b)=1+e−(Wx+b)=σ(Wx+b)</p>
 </blockquote>
-<ol start="3">
-<li>로컬 서버 확인</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="블로그-꾸미기"><a href="#블로그-꾸미기" class="headerlink" title="블로그 꾸미기"></a>블로그 꾸미기</h2><ul>
-<li>로고 만들기<ul>
-<li>테마폴더의 이미지 파일들을 대체해준다.</li>
-<li>icarus테마 기준 \themes\icarus\source\images 내의 favicon, logo 등의 이미지를 변경해준다.</li>
-<li><a href="https://logohub.io/">https://logohub.io/</a> : 로고 제작 사이트</li>
-<li><a href="https://www.aconvert.com/image/png-to-svg/">https://www.aconvert.com/image/png-to-svg/</a> : png파일 svg로 변환</li>
-</ul>
-</li>
-<li>변경한 이미지는 hexo clean후 배포해주어야 적용된다(테마 적용하듯이 적용!)</li>
-</ul>
-<hr>
-<h2 id="기타-팁"><a href="#기타-팁" class="headerlink" title="기타 팁"></a>기타 팁</h2><ul>
-<li>생각보다 시간이 오래 걸린다. 세팅하고 익숙해지는데에 거의 반나절이 걸렸다.</li>
-<li>hexo deploy로 새 글을 발행하는 경우 내 깃헙페이지를 관리하는 실제 레포지토리에는 완성된 글/글과 관련된 블로그 파일들만 올라간다. </li>
-<li>여튼 무슨소리냐면 <strong>내가 로컬에서 글 쓰는 환경</strong> 그 자체는 업로드되지 않는다는 얘기다.</li>
-<li>따라서 내가 글쓰는 환경은 따로 백업을 해줘야하는데 이게 또 글 쓰는 폴더 내의 themes 폴더는 다 별도의 깃헙 레포라서 그냥 통으로 올리면 제대로 백업이 안된다.</li>
-<li><a href="https://mishka.kr/2019/06/13/backup/">https://mishka.kr/2019/06/13/backup/</a> 이분이 굉장히 잘 설명해주심.<ol>
-<li>내 원격 레포를 두개 만든다. 하나는 블로그 쓰는환경 전체파일 백업용(레포1), 다른 하나는 테마 폴더만 백업용(레포2)</li>
-<li>테마 폴더의 원격 저장소 위치를 내 원격레포1로 변경해두고 커밋</li>
-<li>테마 폴더를 지우고 나머지 블로그 글쓰는 환경 폴더를 깃 레포로 만든다.</li>
-<li>테마 폴더를 submodule로 현재 로컬 레포에 추가한다.</li>
-<li>블로그 전체 글쓰는 환경 폴더를 원격레포2로 전체 커밋</li>
-<li>이후 테마가 추가되면 git submodule add로 추가해준다. 테마 관련 설정이 변경돼도 이렇게 해주면 될 듯.</li>
-</ol>
-</li>
-</ul>
-<p><strong>Warning</strong> 로컬 테마폴더의 깃 레포 url을 바꾸지 않으면 기존 icarus  레포에 푸시를 하게 된다!!ㅋㅋ.. 대담한 한국인이 되고싶다면 시도해볼것..</p>
 <ul>
-<li><p>마크다운 에디터가 있으면 편할 것 같아서 또 서치를 했다.</p>
+<li>가중치(w)의 변화에 따른 Sigmoid 함수</li>
+</ul>
+<blockquote>
+<p>red: w값이 0.5 ~ blue: w값이 2</p>
+</blockquote>
+<p><img src="https://wikidocs.net/images/page/22881/%EC%8B%9C%EA%B7%B8%EB%AA%A8%EC%9D%B4%EB%93%9C%ED%95%A8%EC%88%98%EC%9D%98%EA%B8%B0%EC%9A%B8%EA%B8%B0%EC%9D%98%EB%B3%80%ED%99%94.png" alt="대체 텍스트"></p>
 <ul>
-<li>Typora 로 현재 작성중. 가볍고 심플하니 나쁘지 않다.</li>
+<li>편향(b)의 변화에 따른 Sigmoid 함수</li>
 </ul>
-</li>
+<blockquote>
+<p>red: b값이 0.5 ~ blue: b값이 2</p>
+</blockquote>
+<p><img src="https://wikidocs.net/images/page/22881/b%EC%9D%98%EC%9D%B4%EB%8F%99.png" alt="대체 텍스트"></p>
+<h3 id="Sigmoid-함수의-특성"><a href="#Sigmoid-함수의-특성" class="headerlink" title="Sigmoid 함수의 특성"></a>Sigmoid 함수의 특성</h3><ul>
+<li>시그모이드 함수는 입력값이 한없이 커지면 1에 수렴하고, 입력값이 한없이 작아지면 0에 수렴한다.</li>
+<li>시그모이드 함수의 출력은 0~1</li>
+<li>위의 특성을 이용하여 분류 작업에 사용.</li>
+<li>임계값 x(0 =&lt; x =&lt; 1)를 넘으면 1, 넘지 못하면 0으로 분류</li>
 </ul>
+<h3 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h3><blockquote>
+<p>로지스틱 회귀의 가설/모델은 <code>H(x)=sigmoid(Wx+b)</code> 이다.</p>
+</blockquote>
 <hr>
-<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<h3 id="로지스틱-회귀-실습"><a href="#로지스틱-회귀-실습" class="headerlink" title="로지스틱 회귀 실습"></a>로지스틱 회귀 실습</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 최종코드</span></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line">torch.manual_seed(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">x_train = torch.FloatTensor([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>], [<span class="number">3</span>, <span class="number">1</span>], [<span class="number">4</span>, <span class="number">3</span>], [<span class="number">5</span>, <span class="number">3</span>], [<span class="number">6</span>, <span class="number">2</span>]])</span><br><span class="line">y_train = torch.FloatTensor([[<span class="number">0</span>], [<span class="number">0</span>], [<span class="number">0</span>], [<span class="number">1</span>], [<span class="number">1</span>], [<span class="number">1</span>]])</span><br><span class="line"></span><br><span class="line">w = torch.zeros([<span class="number">2</span>, <span class="number">1</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line">b = torch.zeros([<span class="number">1</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># hypothesis = 1 / (1 + torch.exp(-(x_train.matmul(w) + b)))</span></span><br><span class="line">hypothesis = torch.sigmoid(x_train.matmul(w) + b)</span><br><span class="line"></span><br><span class="line">optimizer = torch.optim.SGD([w, b], lr=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">tot_epoch = <span class="number">1000</span></span><br><span class="line"><span class="keyword">for</span> cur_epoch <span class="keyword">in</span> range(tot_epoch + <span class="number">1</span>):</span><br><span class="line">   </span><br><span class="line">   y_hat = torch.sigmoid(x_train.matmul(w) + b)</span><br><span class="line"></span><br><span class="line">   cost = F.binary_cross_entropy(y_hat, y_train)</span><br><span class="line"></span><br><span class="line">   optimizer.zero_grad()</span><br><span class="line">   cost.backward()</span><br><span class="line">   optimizer.step()</span><br><span class="line">   </span><br><span class="line">   <span class="comment"># 100번마다 로그 출력</span></span><br><span class="line">   <span class="keyword">if</span> cur_epoch % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">     print(<span class="string">'Epoch &#123;:4d&#125;/&#123;&#125; Cost: &#123;:.6f&#125;'</span>.format(cur_epoch, tot_epoch, cost.item())) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 제대로 학습됐는지 확인</span></span><br><span class="line">print(w)</span><br><span class="line">print(b)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[결과]</span><br><span class="line">Epoch    0&#x2F;1000 Cost: 0.693147</span><br><span class="line">Epoch  100&#x2F;1000 Cost: 0.134722</span><br><span class="line">Epoch  200&#x2F;1000 Cost: 0.080643</span><br><span class="line">Epoch  300&#x2F;1000 Cost: 0.057900</span><br><span class="line">Epoch  400&#x2F;1000 Cost: 0.045300</span><br><span class="line">Epoch  500&#x2F;1000 Cost: 0.037261</span><br><span class="line">Epoch  600&#x2F;1000 Cost: 0.031672</span><br><span class="line">Epoch  700&#x2F;1000 Cost: 0.027556</span><br><span class="line">Epoch  800&#x2F;1000 Cost: 0.024394</span><br><span class="line">Epoch  900&#x2F;1000 Cost: 0.021888</span><br><span class="line">Epoch 1000&#x2F;1000 Cost: 0.019852</span><br><span class="line">tensor([[3.2530],</span><br><span class="line">        [1.5179]], requires_grad&#x3D;True)</span><br><span class="line">tensor([-14.4819], requires_grad&#x3D;True)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
         </div>
         
@@ -253,7 +272,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/githubpage/" rel="tag">githubpage</a>, <a class="has-link-grey -link" href="/tags/hexo/" rel="tag">hexo</a>
+                    <a class="has-link-grey -link" href="/tags/logistic-regression/" rel="tag">logistic regression</a>, <a class="has-link-grey -link" href="/tags/pytorch/" rel="tag">pytorch</a>, <a class="has-link-grey -link" href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88/" rel="tag">딥러닝기초</a>, <a class="has-link-grey -link" href="/tags/%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80/" rel="tag">로지스틱 회귀</a>
                 </div>
             </div>
         </div>
@@ -270,13 +289,13 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/02/14/ai-study1/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">[딥러닝 스터디] 임베딩이란</span>
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/02/17/ai-start3/">
+                <span class="level-item">[딥러닝 기초] 선형회귀 모델의 개선</span>
+                <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
-        
         
     </div>
 </div>
@@ -289,8 +308,8 @@
         
 <script>
     var disqus_config = function () {
-        this.page.url = 'https://katie0809.github.io/2020/02/14/how-to-start-githubPage/';
-        this.page.identifier = '2020/02/14/how-to-start-githubPage/';
+        this.page.url = 'https://katie0809.github.io/2020/02/17/ai-start4/';
+        this.page.identifier = '2020/02/17/ai-start4/';
     };
     (function() { // DON'T EDIT BELOW THIS LINE
         var d = document, s = d.createElement('script');
@@ -325,46 +344,30 @@
                     목차
                 </h3>
                 <ul class="menu-list"><li>
-        <a class="is-flex" href="#참고한-사이트">
+        <a class="is-flex" href="#로지스틱-회귀란">
         <span class="has-mr-6">1</span>
-        <span>참고한 사이트</span>
-        </a></li><li>
-        <a class="is-flex" href="#Default-Guide">
-        <span class="has-mr-6">2</span>
-        <span>Default Guide</span>
+        <span>로지스틱 회귀란</span>
         </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#Hexo-명령어">
-        <span class="has-mr-6">2.1</span>
-        <span>Hexo 명령어</span>
+        <a class="is-flex" href="#이진분류의-모델">
+        <span class="has-mr-6">1.1</span>
+        <span>이진분류의 모델</span>
         </a></li><li>
-        <a class="is-flex" href="#블로그-꾸미기">
-        <span class="has-mr-6">2.2</span>
-        <span>블로그 꾸미기</span>
+        <a class="is-flex" href="#Sigmoid">
+        <span class="has-mr-6">1.2</span>
+        <span>Sigmoid</span>
         </a></li><li>
-        <a class="is-flex" href="#기타-팁">
-        <span class="has-mr-6">2.3</span>
-        <span>기타 팁</span>
+        <a class="is-flex" href="#Sigmoid-함수의-특성">
+        <span class="has-mr-6">1.3</span>
+        <span>Sigmoid 함수의 특성</span>
         </a></li><li>
-        <a class="is-flex" href="#Quick-Start">
-        <span class="has-mr-6">2.4</span>
-        <span>Quick Start</span>
-        </a><ul class="menu-list"><li>
-        <a class="is-flex" href="#Create-a-new-post">
-        <span class="has-mr-6">2.4.1</span>
-        <span>Create a new post</span>
+        <a class="is-flex" href="#결론">
+        <span class="has-mr-6">1.4</span>
+        <span>결론</span>
         </a></li><li>
-        <a class="is-flex" href="#Run-server">
-        <span class="has-mr-6">2.4.2</span>
-        <span>Run server</span>
-        </a></li><li>
-        <a class="is-flex" href="#Generate-static-files">
-        <span class="has-mr-6">2.4.3</span>
-        <span>Generate static files</span>
-        </a></li><li>
-        <a class="is-flex" href="#Deploy-to-remote-sites">
-        <span class="has-mr-6">2.4.4</span>
-        <span>Deploy to remote sites</span>
-        </a></li></ul></li></ul></li></ul>
+        <a class="is-flex" href="#로지스틱-회귀-실습">
+        <span class="has-mr-6">1.5</span>
+        <span>로지스틱 회귀 실습</span>
+        </a></li></ul></li></ul>
             </div>
         </div>
     </div>
@@ -445,7 +448,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="GithubPage 세팅하기" height="28">
+                    <img src="/images/logo.svg" alt="[딥러닝 기초] Logistic Regression" height="28">
                 
                 </a>
                 <p class="is-size-7">
