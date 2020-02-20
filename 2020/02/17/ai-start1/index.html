@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html  lang="ko">
+<html lang="ko">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
 
-<meta name="generator" content="Hexo 4.2.0" />
+<meta name="generator" content="Hexo 4.2.0">
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="naver-site-verification" content="9abfedc8a2f9ddcb2cd0a96e6a2772ddc7b87e51">
 
+<link rel="canonical" href="https://katie0809.github.io/2020/02/17/ai-start1/">
 <title>[딥러닝 기초] Pytorch 기본연산 - Dailycrush</title>
 
 
@@ -17,14 +19,14 @@
 <meta property="og:site_name" content="Dailycrush">
 <meta property="og:description" content="다음의 책을 공부하며 정리한 내용입니다  https:&#x2F;&#x2F;wikidocs.net&#x2F;book&#x2F;2788  Pytorch 기본 연산: pytorch를 활용한 신경망 구성을 위해 필수적인 딥러닝 기본 연산단위를 알아보자.">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://katie0809.github.io/image/Elegant_Background-3.jpg">
+<meta property="og:image" content="https://katie0809.github.io/image/Elegant_Background-1.jpg">
 <meta property="article:published_time" content="2020-02-17T00:08:25.000Z">
-<meta property="article:modified_time" content="2020-02-17T00:50:42.279Z">
+<meta property="article:modified_time" content="2020-02-18T00:00:05.384Z">
 <meta property="article:author" content="Kyungim Lee">
 <meta property="article:tag" content="pytorch">
 <meta property="article:tag" content="딥러닝기초">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://katie0809.github.io/image/Elegant_Background-3.jpg">
+<meta name="twitter:image" content="https://katie0809.github.io/image/Elegant_Background-1.jpg">
 
 
 
@@ -61,11 +63,15 @@
 <link rel="stylesheet" href="/css/back-to-top.css">
 
     
-    
-    
-    
-    
-    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158681991-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-158681991-1');
+</script>
+
     
     <link rel="stylesheet" href="/css/progressbar.css">
 <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
@@ -75,6 +81,7 @@
 
 
 <link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/rss2.xml" title="Dailycrush" type="application/rss+xml">
 </head>
 <body class="is-2-column">
     <nav class="navbar navbar-main">
@@ -90,27 +97,22 @@
             
             <div class="navbar-start">
                 
-                <a class="navbar-item"
-                href="/">Home</a>
+                <a class="navbar-item" href="/">Home</a>
                 
-                <a class="navbar-item"
-                href="/archives">Archives</a>
+                <a class="navbar-item" href="/archives">Archives</a>
                 
-                <a class="navbar-item"
-                href="/categories">Categories</a>
+                <a class="navbar-item" href="/categories">Categories</a>
                 
-                <a class="navbar-item"
-                href="/tags">Tags</a>
+                <a class="navbar-item" href="/tags">Tags</a>
                 
-                <a class="navbar-item"
-                href="/downloads">Downloads</a>
+                <a class="navbar-item" href="/downloads">Downloads</a>
                 
             </div>
             
             <div class="navbar-end">
                 
                     
-                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/katie0809">
+                    <a class="navbar-item" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
                         
                         <i class="fab fa-github"></i>
                         
@@ -139,8 +141,8 @@
 <div class="card">
     
     <div class="card-image">
-        <span  class="image is-7by1">
-            <img class="thumbnail" src="/image/Elegant_Background-3.jpg" alt="[딥러닝 기초] Pytorch 기본연산">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/image/Elegant_Background-1.jpg" alt="[딥러닝 기초] Pytorch 기본연산">
         </span>
     </div>
     
@@ -173,7 +175,7 @@
         <div class="content">
             <p>다음의 책을 공부하며 정리한 내용입니다</p>
 <ul>
-<li><a href="https://wikidocs.net/book/2788">https://wikidocs.net/book/2788</a></li>
+<li><a href="https://wikidocs.net/book/2788" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/book/2788</a></li>
 </ul>
 <h2 id="Pytorch-기본-연산"><a href="#Pytorch-기본-연산" class="headerlink" title="Pytorch 기본 연산"></a>Pytorch 기본 연산</h2><p>: pytorch를 활용한 신경망 구성을 위해 필수적인 <strong>딥러닝 기본 연산단위</strong>를 알아보자.</p>
 <a id="more"></a>
@@ -187,7 +189,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="2D-Tensor-행렬"><a href="#2D-Tensor-행렬" class="headerlink" title="2D Tensor : 행렬"></a><strong>2D Tenso</strong>r : 행렬</h4><p><img src="https://wikidocs.net/images/page/52460/tensor3.PNG" alt=""></p>
+<h4 id="2D-Tensor-행렬"><a href="#2D-Tensor-행렬" class="headerlink" title="2D Tensor : 행렬"></a><strong>2D Tenso</strong>r : 행렬</h4><p><img src="https://wikidocs.net/images/page/52460/tensor3.PNG" alt></p>
 <p>2차원 텐서는 말그대로 ‘<strong>행렬</strong>‘이다. 따라서 2차원 텐서 t는 다음과 같이 나타낼 수 있다.</p>
 <blockquote>
 <p>|t| = (배치 사이즈, 차원)</p>
@@ -204,7 +206,7 @@
 
 
 
-<h4 id="3D-Tensor"><a href="#3D-Tensor" class="headerlink" title="3D Tensor"></a><strong>3D Tensor</strong></h4><p><img src="https://wikidocs.net/images/page/52460/tensor5.PNG" alt=""></p>
+<h4 id="3D-Tensor"><a href="#3D-Tensor" class="headerlink" title="3D Tensor"></a><strong>3D Tensor</strong></h4><p><img src="https://wikidocs.net/images/page/52460/tensor5.PNG" alt></p>
 <p>이미지/영상처리 분야에서는 보다 복잡한 텐서를 다룬다.</p>
 <p>이미지는 가로/세로가 존재하며, 따라서 여러장의 이미지는 자연스레 <code>(가로, 세로, 배치 크기)</code> 가 됨을 연상할 수 있다.</p>
 <h4 id="3D-Tensor-in-NLP"><a href="#3D-Tensor-in-NLP" class="headerlink" title="3D Tensor in NLP"></a><strong>3D Tensor in NLP</strong></h4><p>Natural Language Processing(자연어처리)에서는 보통 <code>(문장길이, 차원, 배치 크기)</code> 라는 3차원 텐서를 사용한다.</p>
@@ -323,7 +325,7 @@
                 <span class="level-item">개발자 공부</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">6</span>
+                <span class="level-item tag">10</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">
@@ -331,7 +333,7 @@
                 <span class="level-item">인공지능</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">6</span>
+                <span class="level-item tag">10</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/">
@@ -368,7 +370,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/YAMLException/" style="font-size: 10px;">YAMLException</a> <a href="/tags/githubpage/" style="font-size: 10px;">githubpage</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linear-regression/" style="font-size: 13.33px;">linear regression</a> <a href="/tags/logistic-regression/" style="font-size: 10px;">logistic regression</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D/" style="font-size: 13.33px;">딥러닝</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88/" style="font-size: 16.67px;">딥러닝기초</a> <a href="/tags/%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80/" style="font-size: 10px;">로지스틱 회귀</a> <a href="/tags/%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80/" style="font-size: 13.33px;">선형회귀</a> <a href="/tags/%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8/" style="font-size: 13.33px;">언어모델</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC/" style="font-size: 13.33px;">자연어처리</a> <a href="/tags/%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%9E%84%EB%B2%A0%EB%94%A9/" style="font-size: 13.33px;">한국어 임베딩</a>
+        <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/RNN/" style="font-size: 16px;">RNN</a> <a href="/tags/YAMLException/" style="font-size: 10px;">YAMLException</a> <a href="/tags/githubpage/" style="font-size: 10px;">githubpage</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linear-regression/" style="font-size: 12px;">linear regression</a> <a href="/tags/logistic-regression/" style="font-size: 10px;">logistic regression</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/torchtext/" style="font-size: 10px;">torchtext</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D/" style="font-size: 18px;">딥러닝</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88/" style="font-size: 16px;">딥러닝기초</a> <a href="/tags/%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80/" style="font-size: 10px;">로지스틱 회귀</a> <a href="/tags/%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80/" style="font-size: 12px;">선형회귀</a> <a href="/tags/%EC%88%9C%ED%99%98%EC%8B%A0%EA%B2%BD%EB%A7%9D/" style="font-size: 14px;">순환신경망</a> <a href="/tags/%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8/" style="font-size: 18px;">언어모델</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4-%EC%A0%84%EC%B2%98%EB%A6%AC/" style="font-size: 12px;">자연어 전처리</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC/" style="font-size: 18px;">자연어처리</a> <a href="/tags/%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%9E%84%EB%B2%A0%EB%94%A9/" style="font-size: 16px;">한국어 임베딩</a>
     </div>
 </div>
     
@@ -389,8 +391,7 @@
                 </a>
                 <p class="is-size-7">
                 &copy; 2020 Kyungim Lee&nbsp;
-                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
-                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                Powered by <a href="https://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external nofollow noopener noreferrer">Icarus</a>
                 
                 </p>
             </div>
@@ -399,7 +400,7 @@
                 <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
                 
                 <p class="control">
-                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Creative Commons" href="https://creativecommons.org/">
                         
                         <i class="fab fa-creative-commons"></i>
                         
@@ -407,7 +408,7 @@
                 </p>
                 
                 <p class="control">
-                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
                         
                         <i class="fab fa-creative-commons-by"></i>
                         
@@ -415,7 +416,7 @@
                 </p>
                 
                 <p class="control">
-                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/katie0809">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
                         
                         <i class="fab fa-github"></i>
                         
@@ -467,7 +468,7 @@ var IcarusThemeSettings = {
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" rel="external nofollow noopener noreferrer" target="_blank">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>
@@ -521,17 +522,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
-
-
 <script src="/js/main.js" defer></script>
 
     
     <div class="searchbox ins-search">
     <div class="searchbox-container ins-search-container">
         <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요..." />
+            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요...">
             <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="searchbox-result-wrapper ins-section-wrapper">

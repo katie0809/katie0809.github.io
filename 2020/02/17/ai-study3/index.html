@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="naver-site-verification" content="9abfedc8a2f9ddcb2cd0a96e6a2772ddc7b87e51">
+
+<link rel="canonical" href="https://katie0809.github.io/2020/02/17/ai-study3/">
+<title>[딥러닝 스터디] 순환신경망(RNN) - Dailycrush</title>
+
+
+    <meta name="description" content="다음의 책을 공부하며 정리한 내용입니다.  https:&#x2F;&#x2F;wikidocs.net&#x2F;22886  순환신경망(RNN : Recurrent Neural Network): RNN은 입력과 출력을 시퀀스 단위로 처리하는 시퀀스 모델이다. 이때의 입력은 처리하고자 하는 문장, 즉 단어 시퀀스이며, 출력은 처리된 문장 단어 시퀀스이다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[딥러닝 스터디] 순환신경망(RNN)">
+<meta property="og:url" content="https://katie0809.github.io/2020/02/17/ai-study3/index.html">
+<meta property="og:site_name" content="Dailycrush">
+<meta property="og:description" content="다음의 책을 공부하며 정리한 내용입니다.  https:&#x2F;&#x2F;wikidocs.net&#x2F;22886  순환신경망(RNN : Recurrent Neural Network): RNN은 입력과 출력을 시퀀스 단위로 처리하는 시퀀스 모델이다. 이때의 입력은 처리하고자 하는 문장, 즉 단어 시퀀스이며, 출력은 처리된 문장 단어 시퀀스이다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://katie0809.github.io/image/Elegant_Background-2.jpg">
+<meta property="article:published_time" content="2020-02-17T11:31:21.000Z">
+<meta property="article:modified_time" content="2020-02-19T01:16:53.393Z">
+<meta property="article:author" content="Kyungim Lee">
+<meta property="article:tag" content="pytorch">
+<meta property="article:tag" content="자연어처리">
+<meta property="article:tag" content="딥러닝">
+<meta property="article:tag" content="언어모델">
+<meta property="article:tag" content="한국어 임베딩">
+<meta property="article:tag" content="RNN">
+<meta property="article:tag" content="순환신경망">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://katie0809.github.io/image/Elegant_Background-2.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/monokai-sublime.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158681991-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-158681991-1');
+</script>
+
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/rss2.xml" title="Dailycrush" type="application/rss+xml">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="[딥러닝 스터디] 순환신경망(RNN)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/downloads">Downloads</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="목차" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="검색" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/image/Elegant_Background-2.jpg" alt="[딥러닝 스터디] 순환신경망(RNN)">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-17T11:31:21.000Z">2020-02-17</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">인공지능</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11분 소요 (약 1699 글자)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                [딥러닝 스터디] 순환신경망(RNN)
+            
+        </h1>
+        <div class="content">
+            <p>다음의 책을 공부하며 정리한 내용입니다.</p>
+<ul>
+<li><a href="https://wikidocs.net/22886" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/22886</a></li>
+</ul>
+<h2 id="순환신경망-RNN-Recurrent-Neural-Network"><a href="#순환신경망-RNN-Recurrent-Neural-Network" class="headerlink" title="순환신경망(RNN : Recurrent Neural Network)"></a>순환신경망(RNN : Recurrent Neural Network)</h2><p>: RNN은 입력과 출력을 <strong>시퀀스 단위로 처리</strong>하는 <code>시퀀스 모델</code>이다. 이때의 입력은 처리하고자 하는 문장, 즉 단어 시퀀스이며, 출력은 처리된 문장 단어 시퀀스이다. </p>
+<a id="more"></a>
+
+<p>RNN의 가장 큰 특징은 은닉층의 노드에서 나온 결과값이 <code>출력층</code> 과 <code>은닉층</code> 노드의 다음 계산을 위한 입력으로, <strong>둘 모두로 보내진다</strong>는 점이다.</p>
+<p><img src="https://wikidocs.net/images/page/22886/rnn_image1_ver2.PNG" alt="대체 텍스트"></p>
+<ul>
+<li><p><strong>xt</strong> : 입력층의 입력 벡터</p>
+</li>
+<li><p><strong>yt</strong> : 출력층의 출력 벡터</p>
+</li>
+<li><p><strong>cell</strong> : 은닉층에서 <code>결과를 두 방향으로 내보내는</code>(출력층 &amp; 다음연산) 노드. <u>메모리 셀</u> 혹은 RNN셀이라고 표현한다.</p>
+<blockquote>
+<p>이때 메모리 셀이 두 방향으로 내보내는 결과를 <code>은닉상태</code>(hidden state) 라고 한다.</p>
+</blockquote>
+</li>
+</ul>
+<p>피드포워드 신경망에서는 기본적으로 <code>뉴런</code>이라는 단위를 사용했지만, RNN에서는 </p>
+<ul>
+<li>입력층/출력층 -&gt; 입력벡터/출력벡터</li>
+<li>은닉층 -&gt; 은닉상태</li>
+</ul>
+<p>의 표현을 일반적으로 사용한다.</p>
+<p>피드포워드 신경망과 같이 <em>뉴런 단위로 RNN을 시각화</em>할 경우 아래와 같이 표현할 수 있다.</p>
+<p><img src="https://wikidocs.net/images/page/22886/rnn_image2.5.PNG" alt="대체 텍스트"></p>
+<ul>
+<li>입력벡터 차원(입력층의 뉴런 수) : 4</li>
+<li>은닉상태 크기(은닉층의 뉴런 수) : 2</li>
+<li>출력벡터 차원(출력층의 뉴런 수) : 2</li>
+<li>시점(timestep) : 2</li>
+</ul>
+<hr>
+<h3 id="RNN의-활용"><a href="#RNN의-활용" class="headerlink" title="RNN의 활용"></a>RNN의 활용</h3><p>: RNN은 입력과 출력의 길이가 고정되어 있지 않다. 즉, 설계에 따라 다양한 용도로 신경망을 사용할 수 있다.</p>
+<p><img src="https://wikidocs.net/images/page/22886/rnn_image3_ver2.PNG" alt="img"></p>
+<h4 id="일대다-모델"><a href="#일대다-모델" class="headerlink" title="일대다 모델"></a>일대다 모델</h4><ul>
+<li>하나의 이미지 입력에 대해서 사진의 제목을 출력하는 <strong>이미지 캡셔닝(Image Captioning)</strong> 작업에 사용할 수 있다. </li>
+<li>사진의 제목은 단어들의 나열이므로 시퀀스 출력이다.</li>
+</ul>
+<p><img src="https://wikidocs.net/images/page/22886/rnn_image3.5.PNG" alt="img"></p>
+<h4 id="다대일-모델"><a href="#다대일-모델" class="headerlink" title="다대일 모델"></a>다대일 모델</h4><ul>
+<li>단어 시퀀스에 대해서 하나의 출력(many-to-one)을 하는 모델.</li>
+<li>입력 문서가 긍정적인지 부정적인지를 판별하는 <strong>감성 분류</strong>(sentiment classification), 또는 메일이 정상 메일인지 스팸 메일인지 판별하는 <strong>스팸 메일 분류</strong>(spam detection)에 사용할 수 있다. </li>
+<li>위 그림은 RNN으로 스팸 메일을 분류할 때의 아키텍처를 보여줍니다.</li>
+</ul>
+<p><img src="https://wikidocs.net/images/page/22886/rnn_image3.7.PNG" alt="img"></p>
+<h4 id="다대다-모델"><a href="#다대다-모델" class="headerlink" title="다대다 모델"></a>다대다 모델</h4><ul>
+<li>다 대 다(many-to-many)의 모델의 경우에는 입력 문장으로 부터 대답 문장을 출력하는 챗봇과 입력 문장으로부터 번역된 문장을 출력하는 <strong>번역기</strong>, <strong>개체명 인식</strong>이나 <strong>품사 태깅</strong>과 같은 작업이 속한다. </li>
+<li>위 그림은 개체명 인식을 수행할 때의 RNN 아키텍처를 보여줍니다.</li>
+</ul>
+<hr>
+<h3 id="RNN의-수식"><a href="#RNN의-수식" class="headerlink" title="RNN의 수식"></a>RNN의 수식</h3><p><img src="https://wikidocs.net/images/page/22886/rnn_image4_ver2.PNG" alt="img"></p>
+<ul>
+<li><strong>ht</strong> : <u>현재시점 t</u>에서의 <code>은닉 상태값</code></li>
+<li><strong>wx</strong> : 입력층의 입력값에 대한 가중치</li>
+<li><strong>wt</strong> : 이전시점 t-1의 은닉상태값 ht-1 에 대한 가중치 wh</li>
+</ul>
+<p>따라서 ht를 계산하는 수식은 다음과 같다.</p>
+<blockquote>
+<p>ht = activation_func(<code>(wh * ht-1) + (wx * xt) + b</code>)</p>
+</blockquote>
+<p>이때 활성화 함수는 일반적으로 <strong>tanh함수</strong>를 사용한다. ReLU를 사용하기도 한다. 출력층 값 yt는 아래와 같이 계산한다.</p>
+<blockquote>
+<p>yt = activation_func(<code>(wy * ht) + b</code>)</p>
+</blockquote>
+<p>이때 비선형 활성화 함수 중 하나를 activation func으로 사용한다.</p>
+<hr>
+<h3 id="실습-파이썬으로-RNN-구현하기"><a href="#실습-파이썬으로-RNN-구현하기" class="headerlink" title="(실습) 파이썬으로 RNN 구현하기"></a>(실습) 파이썬으로 RNN 구현하기</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 입력과 은닉상태의 크기를 정의한다.</span></span><br><span class="line">input_size = <span class="number">5</span></span><br><span class="line">hidden_size = <span class="number">8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 입력텐서(=입력벡터)를 정의한다. </span></span><br><span class="line"><span class="comment"># (배치크기 * 시점의 수 * 입력크기)를 인자로 받는다.</span></span><br><span class="line">input_vec = torch.Tensor(<span class="number">1</span>, <span class="number">10</span>, input_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># nn.RNN()으로 RNN셀을 정의한다.</span></span><br><span class="line"><span class="comment"># (입력크기 * 은닉상태 크기)를 인자로 받는다. batch_first=True는 입력텐서의 첫번째 차원이 배치크기임을 알려준다.</span></span><br><span class="line">cell = nn.RNN(input_size, hidden_size, batch_first=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 입력텐서를 RNN셀에 넣어 출력값의 크기를 확인해본다.</span></span><br><span class="line"><span class="comment"># (모든 시점의 은닉상태들, 마지막 시점의 은닉상태)를 반환한다.</span></span><br><span class="line">outputs, final_output = cell(input_vec)</span><br><span class="line">print(outputs.shape)</span><br><span class="line">print(final_output.shape)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[결과]</span><br><span class="line">torch.Size([1, 10, 8])</span><br><span class="line">torch.Size([1, 1, 8])</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="다양한-순환신경망"><a href="#다양한-순환신경망" class="headerlink" title="다양한 순환신경망"></a>다양한 순환신경망</h3><ul>
+<li><p>깊은 순환신경망(Deep Recurrent Neural Network)</p>
+<p>: RNN역시 <code>다수의 은닉층</code>을 가질 수 있다. 2개 이상의 은닉층을 가진 RNN을 Deep RNN이라고 한다.</p>
+</li>
+</ul>
+<p><img src="https://wikidocs.net/images/page/22886/rnn_image4.5_finalPNG.PNG" alt="img"></p>
+<p>깊은 순환 신경망은 <code>nn.RNN()</code>의 인자로 <code>num_layers</code> 파라미터를 추가해줌으로서 구현할 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># (입력텐서 크기, 은닉층 크기, 은닉층 개수)</span></span><br><span class="line">cell = nn.RNN(input_size = <span class="number">5</span>, hidden_size = <span class="number">8</span>, num_layers = <span class="number">2</span>, batch_first=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>이때 마지막 시점의 은닉상태는 다음과 같이 바뀐다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(final_output.shape)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># (층의 개수, 배치 크기, 은닉 상태의 크기)</span></span><br><span class="line">&gt;&gt; torch.Size([<span class="number">2</span>, <span class="number">1</span>, <span class="number">8</span>])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>양방향 순환신경망(Bidirectional Recurrent Neural Network)</p>
+<p>: 양방향 순환신경망은 특정 시점 t에서 출력값 ht를 예측할 때 이전시점의 데이터 ht-1뿐만 아니라 <code>이후시점의 데이터로도 예측</code>할 수 있다는 아이디어에서 출발한다.</p>
+</li>
+</ul>
+<p><img src="https://wikidocs.net/images/page/22886/rnn_image5_ver2.PNG" alt="img"></p>
+<p>(예제)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Exercise is very effective at [          ] belly fat.</span><br><span class="line"> </span><br><span class="line">1) reducing</span><br><span class="line">2) increasing</span><br><span class="line">3) multiplying</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>정답 reducing을 찾기 위해서는 <strong><em>이전에 나온 단어와 이후에 나온 단어 모두를 참고\</em></strong>해야 결정할 수 있다.</p>
+</blockquote>
+<p>즉, 양방향 RNN은 이전 시점의 데이터뿐만 아니라, 이후 시점의 데이터도 힌트로 활용하기 위해서 고안된 모델이다.</p>
+<p><img src="https://wikidocs.net/images/page/22886/rnn_image6_ver3.PNG" alt="img"></p>
+<ul>
+<li>양방향 순환 신경망은 하나의 출력값 ht를 예측하기 위해 <code>두개의 메모리 셀</code>을 사용 한다.<ul>
+<li>첫번째 메모리 셀은 <code>앞 시점의 은닉상태</code>를 전달받아 계산한다.</li>
+<li>두번째 메모리 셀은 <code>뒤 시점의 은닉상태</code>를 전달받아 계산한다.</li>
+</ul>
+</li>
+<li>양방향 RNN도 다수의 은닉층을 가질 수 있다.<ul>
+<li>nn.RNN()의 인자로 <code>bidirectional</code>값을 True로 전달하여 구현할 수 있다. </li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># (입력텐서 크기, 은닉층 크기, 은닉층 개수, 양방향 여부)</span></span><br><span class="line">cell = nn.RNN(input_size = <span class="number">5</span>, hidden_size = <span class="number">8</span>, num_layers = <span class="number">2</span>, batch_first=<span class="literal">True</span>, bidirectional=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>이때 마지막 시점의 은닉상태는 다음과 같이 바뀐다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(final_output.shape)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># (층의 개수 * 2, 배치 크기, 은닉 상태의 크기)</span></span><br><span class="line">&gt;&gt; torch.Size([<span class="number">4</span>, <span class="number">1</span>, <span class="number">8</span>])</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/RNN/" rel="tag">RNN</a>, <a class="has-link-grey -link" href="/tags/pytorch/" rel="tag">pytorch</a>, <a class="has-link-grey -link" href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D/" rel="tag">딥러닝</a>, <a class="has-link-grey -link" href="/tags/%EC%88%9C%ED%99%98%EC%8B%A0%EA%B2%BD%EB%A7%9D/" rel="tag">순환신경망</a>, <a class="has-link-grey -link" href="/tags/%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8/" rel="tag">언어모델</a>, <a class="has-link-grey -link" href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC/" rel="tag">자연어처리</a>, <a class="has-link-grey -link" href="/tags/%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%9E%84%EB%B2%A0%EB%94%A9/" rel="tag">한국어 임베딩</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/02/17/ai-study4/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">[딥러닝 스터디] 자연어 처리의 전처리</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/02/17/ai-start4/">
+                <span class="level-item">[딥러닝 기초] Logistic Regression</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">댓글</h3>
+        <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ko/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-comments" data-width="100%" data-href="https://katie0809.github.io/2020/02/17/ai-study3/" data-num-posts="5"></div>
+<link rel="stylesheet" href="/css/facebook.css">
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    목차
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#순환신경망-RNN-Recurrent-Neural-Network">
+        <span class="has-mr-6">1</span>
+        <span>순환신경망(RNN : Recurrent Neural Network)</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#RNN의-활용">
+        <span class="has-mr-6">1.1</span>
+        <span>RNN의 활용</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#일대다-모델">
+        <span class="has-mr-6">1.1.1</span>
+        <span>일대다 모델</span>
+        </a></li><li>
+        <a class="is-flex" href="#다대일-모델">
+        <span class="has-mr-6">1.1.2</span>
+        <span>다대일 모델</span>
+        </a></li><li>
+        <a class="is-flex" href="#다대다-모델">
+        <span class="has-mr-6">1.1.3</span>
+        <span>다대다 모델</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#RNN의-수식">
+        <span class="has-mr-6">1.2</span>
+        <span>RNN의 수식</span>
+        </a></li><li>
+        <a class="is-flex" href="#실습-파이썬으로-RNN-구현하기">
+        <span class="has-mr-6">1.3</span>
+        <span>(실습) 파이썬으로 RNN 구현하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#다양한-순환신경망">
+        <span class="has-mr-6">1.4</span>
+        <span>다양한 순환신경망</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">
+            <span class="level-start">
+                <span class="level-item">개발자 공부</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">
+            <span class="level-start">
+                <span class="level-item">인공지능</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/">
+            <span class="level-start">
+                <span class="level-item">그냥 그런 일상</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/%EA%B7%B8%EB%A0%87%EA%B2%8C-%EB%B0%94%EB%B3%B4%EB%8A%94-%EC%95%84%EB%8B%98/">
+            <span class="level-start">
+                <span class="level-item">그렇게 바보는 아님</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/%EB%81%84%EC%A0%81%EB%81%84%EC%A0%81/">
+            <span class="level-start">
+                <span class="level-item">끄적끄적</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/RNN/" style="font-size: 16px;">RNN</a> <a href="/tags/YAMLException/" style="font-size: 10px;">YAMLException</a> <a href="/tags/githubpage/" style="font-size: 10px;">githubpage</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linear-regression/" style="font-size: 12px;">linear regression</a> <a href="/tags/logistic-regression/" style="font-size: 10px;">logistic regression</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/torchtext/" style="font-size: 10px;">torchtext</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D/" style="font-size: 18px;">딥러닝</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88/" style="font-size: 16px;">딥러닝기초</a> <a href="/tags/%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80/" style="font-size: 10px;">로지스틱 회귀</a> <a href="/tags/%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80/" style="font-size: 12px;">선형회귀</a> <a href="/tags/%EC%88%9C%ED%99%98%EC%8B%A0%EA%B2%BD%EB%A7%9D/" style="font-size: 14px;">순환신경망</a> <a href="/tags/%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8/" style="font-size: 18px;">언어모델</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4-%EC%A0%84%EC%B2%98%EB%A6%AC/" style="font-size: 12px;">자연어 전처리</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC/" style="font-size: 18px;">자연어처리</a> <a href="/tags/%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%9E%84%EB%B2%A0%EB%94%A9/" style="font-size: 16px;">한국어 임베딩</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="[딥러닝 스터디] 순환신경망(RNN)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Kyungim Lee&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external nofollow noopener noreferrer">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("ko");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://katie0809.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" rel="external nofollow noopener noreferrer" target="_blank">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '포스트',
+                PAGES: '페이지',
+                CATEGORIES: '카테고리',
+                TAGS: '태그',
+                UNTITLED: '(제목없음)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

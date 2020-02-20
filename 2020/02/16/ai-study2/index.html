@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html  lang="ko">
+<html lang="ko">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
 
-<meta name="generator" content="Hexo 4.2.0" />
+<meta name="generator" content="Hexo 4.2.0">
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="naver-site-verification" content="9abfedc8a2f9ddcb2cd0a96e6a2772ddc7b87e51">
 
+<link rel="canonical" href="https://katie0809.github.io/2020/02/16/ai-study2/">
 <title>[딥러닝 스터디] 자연어의 계산과 이해 - Dailycrush</title>
 
 
@@ -19,7 +21,7 @@
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://katie0809.github.io/image/Elegant_Background-2.jpg">
 <meta property="article:published_time" content="2020-02-16T07:42:21.000Z">
-<meta property="article:modified_time" content="2020-02-17T00:00:18.401Z">
+<meta property="article:modified_time" content="2020-02-19T01:15:41.472Z">
 <meta property="article:author" content="Kyungim Lee">
 <meta property="article:tag" content="pytorch">
 <meta property="article:tag" content="자연어처리">
@@ -64,11 +66,15 @@
 <link rel="stylesheet" href="/css/back-to-top.css">
 
     
-    
-    
-    
-    
-    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158681991-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-158681991-1');
+</script>
+
     
     <link rel="stylesheet" href="/css/progressbar.css">
 <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
@@ -78,6 +84,7 @@
 
 
 <link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/rss2.xml" title="Dailycrush" type="application/rss+xml">
 </head>
 <body class="is-2-column">
     <nav class="navbar navbar-main">
@@ -93,27 +100,22 @@
             
             <div class="navbar-start">
                 
-                <a class="navbar-item"
-                href="/">Home</a>
+                <a class="navbar-item" href="/">Home</a>
                 
-                <a class="navbar-item"
-                href="/archives">Archives</a>
+                <a class="navbar-item" href="/archives">Archives</a>
                 
-                <a class="navbar-item"
-                href="/categories">Categories</a>
+                <a class="navbar-item" href="/categories">Categories</a>
                 
-                <a class="navbar-item"
-                href="/tags">Tags</a>
+                <a class="navbar-item" href="/tags">Tags</a>
                 
-                <a class="navbar-item"
-                href="/downloads">Downloads</a>
+                <a class="navbar-item" href="/downloads">Downloads</a>
                 
             </div>
             
             <div class="navbar-end">
                 
                     
-                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/katie0809">
+                    <a class="navbar-item" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
                         
                         <i class="fab fa-github"></i>
                         
@@ -142,7 +144,7 @@
 <div class="card">
     
     <div class="card-image">
-        <span  class="image is-7by1">
+        <span class="image is-7by1">
             <img class="thumbnail" src="/image/Elegant_Background-2.jpg" alt="[딥러닝 스터디] 자연어의 계산과 이해">
         </span>
     </div>
@@ -161,7 +163,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    12분 소요 (약 1758 글자)
+                    23분 소요 (약 3517 글자)
                 </span>
                 
                 
@@ -177,9 +179,9 @@
             <p>다음의 책을 공부하며 정리한 내용입니다</p>
 <ul>
 <li>한국어 임베딩 - 이기창</li>
-<li><a href="https://wikidocs.net/21668">https://wikidocs.net/21668</a></li>
-<li><a href="https://wikidocs.net/21687">https://wikidocs.net/21687</a></li>
-<li><a href="https://wikidocs.net/21692">https://wikidocs.net/21692</a></li>
+<li><a href="https://wikidocs.net/21668" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/21668</a></li>
+<li><a href="https://wikidocs.net/21687" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/21687</a></li>
+<li><a href="https://wikidocs.net/21692" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/21692</a></li>
 </ul>
 <h2 id="2장-언어모델이란"><a href="#2장-언어모델이란" class="headerlink" title="2장. 언어모델이란"></a>2장. 언어모델이란</h2><p>: 자연어의 의미를 임베딩에 어떻게 녹여낼 수 있는가? 그 비결은 <code>자연어의 통계적 패턴</code> 을 통째로 임베딩에 넣는 것이다.</p>
 <a id="more"></a>
@@ -248,10 +250,10 @@
 </li>
 </ol>
 <hr>
-<h3 id="2-2-단어가-어떤-순서로-쓰였는가"><a href="#2-2-단어가-어떤-순서로-쓰였는가" class="headerlink" title="2-2. 단어가 어떤 순서로 쓰였는가"></a>2-2. 단어가 어떤 순서로 쓰였는가</h3><p><img src="https://wikidocs.net/images/page/21668/%EB%94%A5_%EB%9F%AC%EB%8B%9D%EC%9D%84_%EC%9D%B4%EC%9A%A9%ED%95%9C.PNG" alt=""></p>
+<h3 id="2-2-단어가-어떤-순서로-쓰였는가"><a href="#2-2-단어가-어떤-순서로-쓰였는가" class="headerlink" title="2-2. 단어가 어떤 순서로 쓰였는가"></a>2-2. 단어가 어떤 순서로 쓰였는가</h3><p><img src="https://wikidocs.net/images/page/21668/%EB%94%A5_%EB%9F%AC%EB%8B%9D%EC%9D%84_%EC%9D%B4%EC%9A%A9%ED%95%9C.PNG" alt></p>
 <ol start="0">
 <li>언어 모델이란?<ul>
-<li>언어 모델이란 언어를 모델리아하고자 <code>단어 시퀀스</code> 에 <code>확률을 부여</code> 하는 모델이다. </li>
+<li>언어 모델이란 딥러닝과 관계없이 이전부터 있었던 개념으로, 언어를 모델링하고자 <code>단어 시퀀스</code> 에 <code>확률을 부여</code> 하는 모델이다. </li>
 <li>단어의 등장 순서를 무시하는 백오브 워즈와 달리 <code>시퀀스 정보를 명시적으로 학습</code> 한다. <u>따라서 백오브 워즈의 대척점</u>에 언어모델이 있다고 할 수 있다.</li>
 <li>언어모델을 만드는 방법으로는 크게 1)통계를 이용한 방법과 2)신경망을 이용한 방법이 있다. </li>
 </ul>
@@ -263,21 +265,35 @@
 <p>이와 유사한 맥락에서 일각에서는 언어 모델을 <strong>문법(grammar)</strong> 이라 비유하기도 한다. 단어간의 조합이 얼마나 적절한지, 특정 문장이 얼마나 자연스러운지를 알려주는 언어모델의 역할이 마치 문법의 기능과 유사하기 때문이다.</p>
 <p>단어가 n개 주어진 상황이라면 <code>언어모델은 n개 단어가 동시에 나타날 확률</code> , 즉 P(w1, w2… wn)을 반환한다.(단어 시퀀스에의 확률 할당)</p>
 <p>이는 다음과 같이 사용할 수 있다. </p>
-<h3 id="a-기계-번역-Machine-Translation"><a href="#a-기계-번역-Machine-Translation" class="headerlink" title="a. 기계 번역(Machine Translation):"></a><strong>a. 기계 번역(Machine Translation):</strong></h3><blockquote>
+<h4 id="a-기계-번역-Machine-Translation"><a href="#a-기계-번역-Machine-Translation" class="headerlink" title="a. 기계 번역(Machine Translation):"></a><strong>a. 기계 번역(Machine Translation):</strong></h4><blockquote>
 <p>P(나는 버스를 탔다) &gt; P(나는 버스를 태운다)</p>
 </blockquote>
 <p>: 언어 모델은 두 문장을 비교하여 좌측의 문장의 확률이 더 높다고 판단합니다. </p>
-<h3 id="b-오타-교정-Spell-Correction"><a href="#b-오타-교정-Spell-Correction" class="headerlink" title="b. 오타 교정(Spell Correction)"></a><strong>b. 오타 교정(Spell Correction)</strong></h3><p>선생님이 교실로 부리나케</p>
+<h4 id="b-오타-교정-Spell-Correction"><a href="#b-오타-교정-Spell-Correction" class="headerlink" title="b. 오타 교정(Spell Correction)"></a><strong>b. 오타 교정(Spell Correction)</strong></h4><p>선생님이 교실로 부리나케</p>
 <blockquote>
 <p>P(달려갔다) &gt; P(잘려갔다)</p>
 </blockquote>
 <p>: 언어 모델은 두 문장을 비교하여 좌측의 문장의 확률이 더 높다고 판단합니다. </p>
-<h3 id="c-음성-인식-Speech-Recognition"><a href="#c-음성-인식-Speech-Recognition" class="headerlink" title="c. 음성 인식(Speech Recognition)"></a><strong>c. 음성 인식(Speech Recognition)</strong></h3><blockquote>
+<h4 id="c-음성-인식-Speech-Recognition"><a href="#c-음성-인식-Speech-Recognition" class="headerlink" title="c. 음성 인식(Speech Recognition)"></a><strong>c. 음성 인식(Speech Recognition)</strong></h4><blockquote>
 <p>P(나는 메롱을 먹는다) &lt; P(나는 메론을 먹는다)</p>
 </blockquote>
 <p>: 언어 모델은 두 문장을 비교하여 우측의 문장의 확률이 더 높다고 판단합니다.</p>
 <p>언어 모델은 위와 같이 확률을 통해 <strong>보다 적절한 문장을 판단한다.</strong></p>
-<ol>
+<hr>
+<h3 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h3><ul>
+<li><p>언어를 모델링하고자 단어 시퀀스에 확률을 부여하는 모델로, 잘 학습된 언어모델은 어떤 시퀀스가 자연스러운지를 판단해낸다.</p>
+</li>
+<li><p>인간이 쓰는 자연어는 레이블이 없는 비지도 학습. 이를 지도학습과 같이 학습하도록 여러 방법을 사용</p>
+</li>
+<li><p>문제1) 비지도학습인 자연어를 어떻게 학습할 것인가?</p>
+<p>: 이전 단어들이 주어졌을 때 다음 단어를 예측하도록 한다.</p>
+</li>
+<li><p>문제2) 각 단어시퀀스에 확률은 어떻게 할당할 것인가?</p>
+<p>: 카운트 기반 접근방식 사용한다.</p>
+</li>
+</ul>
+<hr>
+<h3 id="언어모델의-종류"><a href="#언어모델의-종류" class="headerlink" title="언어모델의 종류"></a>언어모델의 종류</h3><ol>
 <li><p>통계 기반 언어 모델(SLM: Statistical Language Model)</p>
 <ul>
 <li>통계 기반 언어모델은 말뭉치에서 해당 <code>단어 시퀀스가 얼마나 자주 등장하는지</code> 의 빈도를 세어서 학습한다.</li>
@@ -297,23 +313,173 @@
 </blockquote>
 <ul>
 <li><p>이때 특정 시퀀스로부터 다음 단어가 나올 확률은 <strong>카운트에 기반해 계산</strong>할 수 있다.</p>
-<p><img src="/image/screenshot3.png" alt=""></p>
+<p><img src="/image/screenshot3.png" alt></p>
 </li>
 </ul>
 <ol start="2">
 <li><p>N-gram 언어모델</p>
 <ul>
-<li>n-gram 언어모델은 통계 기반 언어모델의 일종으로 전통적 SLM과 같이 카운트에 기반한 통계적 접근을 사용한다. </li>
-<li>전통적 SLM과 달리 이전에 등장한 모든 단어가 아닌 <code>일부 단어만 고려</code> 하는 방법을 사용한다.</li>
-<li>즉, n-gram에서 n은 n개의 단어, 혹은 n-gram에 기반한 언어모델을 의미한다. 말뭉치(corpus) 내 단어들을 n개씩 묶어서 그 빈도를 학습했다는 의미이다. </li>
-</ul>
+<li><p>n-gram 언어모델은 통계 기반 언어모델의 일종으로 전통적 SLM과 같이 카운트에 기반한 통계적 접근을 사용한다. </p>
+<p>: 이전의 <u>n-1개의 단어</u>를 보고 <strong>n번째 단어를 예측</strong>하는 방식</p>
 </li>
-<li><p>신경망 기반 언어모델</p>
-<ul>
-<li>카운트 기반 접근은 그 방식상 본질적인 한계를 갖는다. </li>
+<li><p>전통적 SLM과 달리 이전에 등장한 모든 단어가 아닌 <code>일부 단어만 고려</code> 하는 방법을 사용한다.</p>
+</li>
+<li><p>즉, n-gram에서 n은 n개의 단어, 혹은 n-gram에 기반한 언어모델을 의미한다. 말뭉치(corpus) 내 단어들을 <strong>n개씩 묶어서</strong> 그 빈도를 학습했다는 의미이다. </p>
+</li>
 </ul>
 </li>
 </ol>
+<p>   <strong>한국어 언어 모델 예시</strong></p>
+<table>
+<thead>
+<tr>
+<th>문장</th>
+<th>확률</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>진이는 이 책을 세 번 읽었다</td>
+<td>0.47</td>
+</tr>
+<tr>
+<td>이 책이 진이한테 세 번 읽혔다</td>
+<td>0.23</td>
+</tr>
+<tr>
+<td>세 번이 진이한테 이 책을 읽혔다</td>
+<td>0.07</td>
+</tr>
+</tbody></table>
+<p>   : 자연스러운 한국어 문장에 높은 확률값을 부여한다.</p>
+<table>
+<thead>
+<tr>
+<th>표현</th>
+<th>빈도</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>영원히</td>
+<td>104</td>
+</tr>
+<tr>
+<td>기억될</td>
+<td>29</td>
+</tr>
+<tr>
+<td>최고의</td>
+<td>3503</td>
+</tr>
+<tr>
+<td>명작이다</td>
+<td>298</td>
+</tr>
+<tr>
+<td>영원히 기억될</td>
+<td>7</td>
+</tr>
+<tr>
+<td>기억될 최고의</td>
+<td>1</td>
+</tr>
+<tr>
+<td>최고의 명작이다</td>
+<td>23</td>
+</tr>
+<tr>
+<td>기억될 최고의 명작이다</td>
+<td>17</td>
+</tr>
+<tr>
+<td>영원히 기억될 최고의 명작이다</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<ul>
+<li>전통적 SLM에서는 문법적으로 전혀 문제가 없는 ‘영원히 기억될 최고의 명작이다’ 라는 문장에 0의 확률을 부여하게 된다. =&gt; 이 말뭉치에 한번도 나타난 적 없기 때문.</li>
+<li>n-gram모델을 통해 이 문제를 일부 해결할 수 있다.</li>
+<li><code>직전 n-1개 단어의 등장확률</code> 로 <strong>전체 단어 시퀀스 등장 확률</strong> 을 <strong><code>근사</code></strong> 하는 것이다!</li>
+</ul>
+<p>   ‘<strong>영원히 기억될 최고의</strong>‘ 시퀀스 뒤에 <code>명작이다</code> 라는 단어가 올 확률을 trigram으로 근사해보면 얼마일까?</p>
+<p>   P(명작이다 | 영원히, 기억될, 최고의) <del>(유사)</del> P(명작이다 | 기억될, 최고의)</p>
+<p>   = Freq(기억될, 최고의, 명작이다) / Freq(명작이다)</p>
+<p>   = 17 / 298</p>
+<ul>
+<li>위와 같이 단어를 슬라이딩 해가면서 수식을 풀어 생각한다면 전체 문장 ‘영원히 기억될 최고의 작품이다’를 trigram으로 계산하기 위한 수식은 다음과 같다.</li>
+<li><code>영원히 기억될</code> 이 등장할 확률 * <code>영원히 기억될</code> 뒤에 <code>최고의</code> 가 등장할 확률 * <code>기억될 최고의</code> 뒤에 <code>명작이다</code> 가 등장할 확률</li>
+</ul>
+<p>   [ 카운트 기반 접근방식의 <strong>본질적 한계</strong> ]</p>
+<ul>
+<li><p><strong><code>희소문제</code></strong> : Sparcity Problem</p>
+<ul>
+<li><p>여전히 희소문제는 존재한다. 코퍼스 내에 단어시퀀스가 없을(카운트하지 못할) 확률은 여전히 존재.</p>
+</li>
+<li><p>n의 선택은 trade-off : n의 크기를 키우면 예측의 정확도는 높아지지만, 코퍼스에서 해당 n개의 시퀀스를 카운트할 확률은 낮아짐(희소문제 증가), 모델사이즈 커짐. </p>
+<p>반대로 n을 작게 선택하면 훈련 코퍼스에서 카운트는 잘 되겠지만 근사의 정확도는 현실의 확률분포와 멀어짐.</p>
+<p>=&gt; <u>n은 최대 5</u>를 넘어서는 안된다고 권장됨.</p>
+</li>
+<li><p>NNLM(Neural Net Language Model)을 통해 <code>언어 모델 또한 단어의 유사도를 학습</code> 할 수 있도록 설계.</p>
+<ul>
+<li>훈련 코퍼스에 없는 단어 시퀀스도 예측을 통해 유사한 단어 시퀀스를 참고하여 확률을 계산해낸다.</li>
+<li>워드 임베딩의 아이디어이기도 한다.</li>
+<li>단어를 continuous한 밀집벡터의 형태로 표현하여 희소문제를 해결(?)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a href="https://wikidocs.net/22147" rel="external nofollow noopener noreferrer" target="_blank"><strong><code>long-term dependency</code></strong></a> : 정해진 개수의 전 토큰만을 보기 때문에 볼 수 있는 시퀀스의 범위가 한정됨.</p>
+<ul>
+<li>이는 모델의 정확도와 연관</li>
+</ul>
+<blockquote>
+<p><u>An adorable little</u> boy is spreading (   ?   )</p>
+</blockquote>
+<p>위와 같은 문장이 있을 때 정답은 insults, smile 둘 중 하나라고 해보자. 문맥상 “<u>작고 사랑스러운</u> 아이가 (미소)를 퍼뜨렸다” 가 적절함을 알 수 있다.</p>
+<p>하지만 만약 <u>작고 사랑스러운</u> 이라는 밑줄 친 부분을 예측에 고려하지 않는다면 엉뚱한 답 insults를 고를 수 있다.</p>
+</li>
+</ul>
+<ol start="3">
+<li><p>신경망 기반 언어모델</p>
+<ul>
+<li>카운트 기반 접근은 그 방식상 본질적인 한계를 갖는다. </li>
+<li>이를 극복하기 위해 다양한 방법 시도되었지만(백오프, 스무딩) 본질적인 n-gram 언어모델(고정된 개수의 단어만을 입력으로 받아야한다)에 대한 취약점은 해결하지 못함.</li>
+</ul>
+</li>
+</ol>
+<p><strong>RNNLM</strong>(Recurrent Neural Network Language Model)</p>
+<p><img src="https://wikidocs.net/images/page/46496/rnnlm1_final_final.PNG" alt></p>
+<p>예문 <em>what will the fat cat sit on</em> 의 RNNLM 학습/사용 과정을 보자.</p>
+<p>1) 훈련이 끝난 모델을 사용할 경우 </p>
+<ul>
+<li>RNNLM은 예측 과정에서 <strong>이전 시점의 출력을 현재 시점의 입력</strong>으로 한다. </li>
+<li>RNNLM은 what을 입력받으면, will을 예`하고 이 will은 다음 시점의 입력이 되어 the를 예측한다. 이것이 반복되어 <u>네번째 시점의 cat</u>은 앞서 나온 <strong>what, will, the, fat이라는 시퀀스로 인해 결정된 단어</strong>가 된다.</li>
+</ul>
+<p>2) 모델을 훈련시키는 경우</p>
+<ul>
+<li>위의 샘플에 대해 <code>what will the fat cat sit 시퀀스를 모델의 입력</code>으로 넣으면, <strong>will the fat cat sit on를 예측하도록 훈련</strong>한다.</li>
+<li>이때 <em>will, the, fat, cat, sit, on</em>은 <u>각 시점의 레이블(<strong><code>yt</code></strong>)</u>가 된다.</li>
+<li>이러한 RNN 훈련 기법을 <strong>교사 강요(teacher forcing)</strong> 라고 한다.</li>
+</ul>
+<blockquote>
+<p>교사 강요(teacher forcing) : 테스트(실제 모델 사용) 과정에서 t 시점의 출력이 t+1 시점의 입력으로 사용되는 RNN 모델을 훈련시킬 때 사용하는 <strong>훈련 기법</strong>입니다. </p>
+<p>훈련할 때 교사 강요를 사용할 경우, 모델이 <u>t 시점에서 예측한 값</u>을 <strong>t+1 시점에 입력으로 사용하지 않고</strong>, t 시점의 레이블. 즉, <strong><code>실제 알고있는 정답</code></strong>을 t+1 시점의 입력으로 사용합니다.</p>
+</blockquote>
+<p><strong>RNNLM의 학습 구조</strong></p>
+<p><img src="https://wikidocs.net/images/page/46496/rnnlm2_final_final.PNG" alt></p>
+<p><img src="https://wikidocs.net/images/page/46496/rnnlm4_final.PNG" alt></p>
+<ul>
+<li>임베딩층 : et=lookup(xt)</li>
+<li>은닉층 : ht=tanh(Wxet+Whht−1+b)</li>
+<li>출력층 : yt^=softmax(Wyht+b)</li>
+<li>사용되는 손실함수 : cross-entropy</li>
+<li>학습 과정에서 학습되는 가중치 행렬 : E(임베딩 행렬), Wx, Wh, Wy</li>
+</ul>
+<hr>
+<h3 id="2-3-어떤-단어가-같이-쓰였는가"><a href="#2-3-어떤-단어가-같이-쓰였는가" class="headerlink" title="2-3. 어떤 단어가 같이 쓰였는가"></a>2-3. 어떤 단어가 같이 쓰였는가</h3><h4 id="분포가정"><a href="#분포가정" class="headerlink" title="분포가정"></a>분포가정</h4><p>: 자연어 처리에서 <strong>분포</strong>란 특정 범위(=<strong>윈도우</strong>)내에 <code>동시에 등장하는 단어 또는 문맥의 집합</code> 을 가리킨다.</p>
+<blockquote>
+<p>어떤 단어 쌍이 비슷한 문맥 환경에서 자주 등장한다면 그 의미 또한 유사할 것이라는게 분포가정의 전제이다.</p>
+</blockquote>
+<p>즉, 자연어를 사용하는 화자들이 특정 단어를 <code>실제 어떻게 사용하는지 관찰</code> 함으로서 <strong>단어의 의미를 밝힐</strong> 수 있다는 의미.</p>
 
         </div>
         
@@ -401,19 +567,35 @@
         <a class="is-flex" href="#2-2-단어가-어떤-순서로-쓰였는가">
         <span class="has-mr-6">1.2</span>
         <span>2-2. 단어가 어떤 순서로 쓰였는가</span>
-        </a></li><li>
+        </a><ul class="menu-list"><li>
         <a class="is-flex" href="#a-기계-번역-Machine-Translation">
-        <span class="has-mr-6">1.3</span>
+        <span class="has-mr-6">1.2.1</span>
         <span>a. 기계 번역(Machine Translation):</span>
         </a></li><li>
         <a class="is-flex" href="#b-오타-교정-Spell-Correction">
-        <span class="has-mr-6">1.4</span>
+        <span class="has-mr-6">1.2.2</span>
         <span>b. 오타 교정(Spell Correction)</span>
         </a></li><li>
         <a class="is-flex" href="#c-음성-인식-Speech-Recognition">
-        <span class="has-mr-6">1.5</span>
+        <span class="has-mr-6">1.2.3</span>
         <span>c. 음성 인식(Speech Recognition)</span>
-        </a></li></ul></li></ul>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#정리">
+        <span class="has-mr-6">1.3</span>
+        <span>정리</span>
+        </a></li><li>
+        <a class="is-flex" href="#언어모델의-종류">
+        <span class="has-mr-6">1.4</span>
+        <span>언어모델의 종류</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-3-어떤-단어가-같이-쓰였는가">
+        <span class="has-mr-6">1.5</span>
+        <span>2-3. 어떤 단어가 같이 쓰였는가</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#분포가정">
+        <span class="has-mr-6">1.5.1</span>
+        <span>분포가정</span>
+        </a></li></ul></li></ul></li></ul>
             </div>
         </div>
     </div>
@@ -433,7 +615,7 @@
                 <span class="level-item">개발자 공부</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">6</span>
+                <span class="level-item tag">10</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">
@@ -441,7 +623,7 @@
                 <span class="level-item">인공지능</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">6</span>
+                <span class="level-item tag">10</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/">
@@ -478,7 +660,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/YAMLException/" style="font-size: 10px;">YAMLException</a> <a href="/tags/githubpage/" style="font-size: 10px;">githubpage</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linear-regression/" style="font-size: 13.33px;">linear regression</a> <a href="/tags/logistic-regression/" style="font-size: 10px;">logistic regression</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D/" style="font-size: 13.33px;">딥러닝</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88/" style="font-size: 16.67px;">딥러닝기초</a> <a href="/tags/%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80/" style="font-size: 10px;">로지스틱 회귀</a> <a href="/tags/%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80/" style="font-size: 13.33px;">선형회귀</a> <a href="/tags/%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8/" style="font-size: 13.33px;">언어모델</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC/" style="font-size: 13.33px;">자연어처리</a> <a href="/tags/%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%9E%84%EB%B2%A0%EB%94%A9/" style="font-size: 13.33px;">한국어 임베딩</a>
+        <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/RNN/" style="font-size: 16px;">RNN</a> <a href="/tags/YAMLException/" style="font-size: 10px;">YAMLException</a> <a href="/tags/githubpage/" style="font-size: 10px;">githubpage</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linear-regression/" style="font-size: 12px;">linear regression</a> <a href="/tags/logistic-regression/" style="font-size: 10px;">logistic regression</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/torchtext/" style="font-size: 10px;">torchtext</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D/" style="font-size: 18px;">딥러닝</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88/" style="font-size: 16px;">딥러닝기초</a> <a href="/tags/%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80/" style="font-size: 10px;">로지스틱 회귀</a> <a href="/tags/%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80/" style="font-size: 12px;">선형회귀</a> <a href="/tags/%EC%88%9C%ED%99%98%EC%8B%A0%EA%B2%BD%EB%A7%9D/" style="font-size: 14px;">순환신경망</a> <a href="/tags/%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8/" style="font-size: 18px;">언어모델</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4-%EC%A0%84%EC%B2%98%EB%A6%AC/" style="font-size: 12px;">자연어 전처리</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC/" style="font-size: 18px;">자연어처리</a> <a href="/tags/%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%9E%84%EB%B2%A0%EB%94%A9/" style="font-size: 16px;">한국어 임베딩</a>
     </div>
 </div>
     
@@ -499,8 +681,7 @@
                 </a>
                 <p class="is-size-7">
                 &copy; 2020 Kyungim Lee&nbsp;
-                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
-                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                Powered by <a href="https://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external nofollow noopener noreferrer">Icarus</a>
                 
                 </p>
             </div>
@@ -509,7 +690,7 @@
                 <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
                 
                 <p class="control">
-                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Creative Commons" href="https://creativecommons.org/">
                         
                         <i class="fab fa-creative-commons"></i>
                         
@@ -517,7 +698,7 @@
                 </p>
                 
                 <p class="control">
-                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
                         
                         <i class="fab fa-creative-commons-by"></i>
                         
@@ -525,7 +706,7 @@
                 </p>
                 
                 <p class="control">
-                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/katie0809">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
                         
                         <i class="fab fa-github"></i>
                         
@@ -577,7 +758,7 @@ var IcarusThemeSettings = {
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" rel="external nofollow noopener noreferrer" target="_blank">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>
@@ -631,17 +812,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
-
-
 <script src="/js/main.js" defer></script>
 
     
     <div class="searchbox ins-search">
     <div class="searchbox-container ins-search-container">
         <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요..." />
+            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요...">
             <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="searchbox-result-wrapper ins-section-wrapper">

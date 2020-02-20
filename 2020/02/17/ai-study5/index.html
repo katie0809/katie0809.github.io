@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="naver-site-verification" content="9abfedc8a2f9ddcb2cd0a96e6a2772ddc7b87e51">
+
+<link rel="canonical" href="https://katie0809.github.io/2020/02/17/ai-study5/">
+<title>[딥러닝 스터디] 자연어 전처리 실습 - Dailycrush</title>
+
+
+    <meta name="description" content="자연어 처리 라이브러리인 토치텍스트를 활용해 이전 포스트의 전처리 이론을 실제로 구현해보자. 토치텍스트: 텍스트에 대한 여러 추상화 기능을 제공하는 자연어 처리 라이브러리">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[딥러닝 스터디] 자연어 전처리 실습">
+<meta property="og:url" content="https://katie0809.github.io/2020/02/17/ai-study5/index.html">
+<meta property="og:site_name" content="Dailycrush">
+<meta property="og:description" content="자연어 처리 라이브러리인 토치텍스트를 활용해 이전 포스트의 전처리 이론을 실제로 구현해보자. 토치텍스트: 텍스트에 대한 여러 추상화 기능을 제공하는 자연어 처리 라이브러리">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://katie0809.github.io/image/Elegant_Background-2.jpg">
+<meta property="article:published_time" content="2020-02-17T12:58:36.000Z">
+<meta property="article:modified_time" content="2020-02-19T01:17:05.994Z">
+<meta property="article:author" content="Kyungim Lee">
+<meta property="article:tag" content="자연어처리">
+<meta property="article:tag" content="딥러닝">
+<meta property="article:tag" content="언어모델">
+<meta property="article:tag" content="자연어 전처리">
+<meta property="article:tag" content="RNN">
+<meta property="article:tag" content="순환신경망">
+<meta property="article:tag" content="torchtext">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://katie0809.github.io/image/Elegant_Background-2.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/monokai-sublime.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158681991-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-158681991-1');
+</script>
+
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/rss2.xml" title="Dailycrush" type="application/rss+xml">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="[딥러닝 스터디] 자연어 전처리 실습" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/downloads">Downloads</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="목차" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="검색" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/image/Elegant_Background-2.jpg" alt="[딥러닝 스터디] 자연어 전처리 실습">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-17T12:58:36.000Z">2020-02-17</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">인공지능</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    12분 소요 (약 1734 글자)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                [딥러닝 스터디] 자연어 전처리 실습
+            
+        </h1>
+        <div class="content">
+            <p>자연어 처리 라이브러리인 토치텍스트를 활용해 이전 포스트의 <u>전처리 이론을 실제로 구현</u>해보자.</p>
+<h2 id="토치텍스트"><a href="#토치텍스트" class="headerlink" title="토치텍스트"></a>토치텍스트</h2><p>: 텍스트에 대한 여러 추상화 기능을 제공하는 <strong>자연어 처리 라이브러리</strong></p>
+<a id="more"></a>
+
+<h3 id="토치텍스트-제공-기능"><a href="#토치텍스트-제공-기능" class="headerlink" title="토치텍스트 제공 기능"></a>토치텍스트 제공 기능</h3><ol>
+<li>파일 로드하기(File Loading) : 다양한 포맷의 <code>코퍼스를 로드</code>한다.</li>
+<li><code>토큰화</code>(Tokenization) : 문장을 단어 단위로 분리한다.</li>
+<li><code>단어 집합 생성</code>(Vocab) : 단어 집합을 만든다.</li>
+<li><code>정수 인코딩</code>(Integer encoding) : 전체 코퍼스의 단어들을 각각의 고유한 정수로 맵핑한다.</li>
+<li>단어 벡터(Word Vector) : 단어 집합의 단어들에 고유한 <code>임베딩</code> 벡터를 만들어줍니다. 랜덤값으로 초기화한 값일 수도 있고, 사전 훈련된 임베딩 벡터들을 로드할 수도 있습니다.</li>
+<li><code>배치</code>화(Batching) : 훈련 샘플들의 배치를 만들어줍니다. 이 과정에서 패딩 작업(Padding)도 이루어집니다.</li>
+</ol>
+<h3 id="실습-1-IMDB-리뷰데이터-분류하기-영어"><a href="#실습-1-IMDB-리뷰데이터-분류하기-영어" class="headerlink" title="실습 1. IMDB 리뷰데이터 분류하기(영어)"></a>실습 1. IMDB 리뷰데이터 분류하기(영어)</h3><h4 id="데이터-다운-및-용도에-따른-분류-진행-훈련-테스트"><a href="#데이터-다운-및-용도에-따른-분류-진행-훈련-테스트" class="headerlink" title="데이터 다운 및 용도에 따른 분류 진행(훈련/테스트)"></a>데이터 다운 및 용도에 따른 분류 진행(훈련/테스트)</h4><ul>
+<li>데이터는 text(리뷰데이터)와 sentiment(리뷰의 긍정:1/부정:0 여부)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 토치텍스트 설치</span></span><br><span class="line">pip install torchtext</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># IMDB 리뷰 데이터 다운로드</span></span><br><span class="line">urllib.request.urlretrieve(<span class="string">"https://raw.githubusercontent.com/LawrenceDuan/IMDb-Review-Analysis/master/IMDb_Reviews.csv"</span>, filename=<span class="string">"IMDb_Reviews.csv"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 데이터 csv파일로 저장, 상위 5개 행 출력해본다</span></span><br><span class="line">df = pd.read_csv(<span class="string">'IMDb_Reviews.csv'</span>, encoding=<span class="string">'latin1'</span>)</span><br><span class="line">df.head()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 훈련 데이터와 테스트 데이터로 분류(총 5만개)</span></span><br><span class="line">train_df = df[:<span class="number">40000</span>]</span><br><span class="line">test_df = df[<span class="number">40001</span>:]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 각 데이터를 csv 파일로 저장 (index=False :: 인덱스를 저장하지 않음)</span></span><br><span class="line">train_df.to_csv(<span class="string">"train_data.csv"</span>, index=<span class="literal">False</span>)</span><br><span class="line">test_df.to_csv(<span class="string">"test_data.csv"</span>, index=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="필드-정의하기-torchtext-data"><a href="#필드-정의하기-torchtext-data" class="headerlink" title="필드 정의하기(torchtext.data)"></a>필드 정의하기(torchtext.data)</h4><blockquote>
+<p>torchtext.data 의 Field함수를 활용해 진행할 자연어 전처리를 정의할 수 있다.</p>
+</blockquote>
+<ul>
+<li>sequential : 순차적인 데이터 여부. (True가 기본값) LABEL은 긍정/부정의 단순한 클래스를 나타내는 숫자값이지 순차적 데이터가 아니므로 False이다.</li>
+<li><code>use_vocab</code> : 단어 집합을 만들 것인지 여부. (True가 기본값)</li>
+<li><code>tokenize</code> : 어떤 토큰화 함수를 사용할 것인지 지정. (string.split이 기본값)</li>
+<li>lower : 영어 데이터를 전부 소문자화한다. (False가 기본값)</li>
+<li><code>batch_first</code> : 신경망에 입력되는 텐서의 첫번째 차원값이 batch_size가 되도록 한다. (False가 기본값)</li>
+<li>is_target : 레이블 데이터 여부. (False가 기본값)</li>
+<li><code>fix_length</code> : 최대 허용 길이. 이 길이에 맞춰서 패딩 작업(Padding)이 진행된다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torchtext.data <span class="keyword">import</span> TabularDataset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 경로, 훈련데이터, 테스트데이터, 데이터포멧, 텍스트객체</span></span><br><span class="line">train_data, test_data = TabularDataset.splits(</span><br><span class="line">        path=<span class="string">'.'</span>, train=<span class="string">'train_data.csv'</span>, test=<span class="string">'test_data.csv'</span>, format=<span class="string">'csv'</span>,</span><br><span class="line">        fields=[(<span class="string">'text'</span>, TEXT), (<span class="string">'label'</span>, LABEL)], skip_header=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 훈련 데이터의 샘플을 확인한다.</span></span><br><span class="line">print(vars(train_data[<span class="number">1</span>])[<span class="string">'text'</span>])</span><br><span class="line">print(vars(train_data[<span class="number">1</span>])[<span class="string">'label'</span>])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[결과]</span><br><span class="line">[&#39;believe&#39;, &#39;it&#39;, &#39;or&#39;, &#39;not,&#39;, &#39;this&#39;, &#39;was&#39;, &#39;at&#39;, &#39;one&#39;, &#39;time&#39;, &#39;the&#39;, &#39;worst&#39;, &#39;movie&#39;, &#39;i&#39;, &#39;had&#39;, &#39;ever&#39;, &#39;seen.&#39;, &#39;since&#39;, &#39;that&#39;, &#39;time,&#39;, &#39;i&#39;, &#39;have&#39;, &#39;seen&#39;, &#39;many&#39;, &#39;more&#39;, &#39;movies&#39;, &#39;that&#39;, &#39;are&#39;, &#39;worse&#39;, &#39;(how&#39;, &#39;is&#39;, &#39;it&#39;, &#39;possible??)&#39;, &#39;therefore,&#39;, &#39;to&#39;, &#39;be&#39;, &#39;fair,&#39;, &#39;i&#39;, &#39;had&#39;, &#39;to&#39;, &#39;give&#39;, &#39;this&#39;, &#39;movie&#39;, &#39;a&#39;, &#39;2&#39;, &#39;out&#39;, &#39;of&#39;, &#39;10.&#39;, &#39;but&#39;, &#39;it&#39;, &#39;was&#39;, &#39;a&#39;, &#39;tough&#39;, &#39;call.&#39;]</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<h4 id="단어집합을-생성한다"><a href="#단어집합을-생성한다" class="headerlink" title="단어집합을 생성한다."></a>단어집합을 생성한다.</h4><ul>
+<li>전체 리뷰의 단어들 내에서 중복을 제거한 단어집합을 생성한다.</li>
+<li>각 단어에 고유한 정수를 부여한다(정수 인코딩)<ul>
+<li>정의한 필드 객체의 <code>.build_vocab()</code> 함수를 활용해 단어집합을 생성할 수 있다.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 리뷰 데이터의 단어집합을 만든다.</span></span><br><span class="line"><span class="comment"># min_freq : 단어집합에 추가되기 위한 최소 등장빈도조건</span></span><br><span class="line"><span class="comment"># max_size : 단어집합의 최대 크기</span></span><br><span class="line">TEXT.build_vocab(train_data, min_freq=<span class="number">10</span>, max_size=<span class="number">10000</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Size of vocab : '</span>, len(TEXT.vocab))</span><br><span class="line">print(<span class="string">'Integer index of word [the] : '</span>, TEXT.vocab.stoi[<span class="string">'the'</span>])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[결과]</span><br><span class="line">Size of vocab :  10002</span><br><span class="line">Integer index of word [the] :  2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이때 단어집합의 크기는 기존에 정의한 10000이 아닌 10002임을 알 수 있다. 더해진 두개는 토치텍스트가 자동으로 추가한 특별토큰 <strong><em>unk\</em></strong>와 <strong><em>pad\</em></strong>이다.</li>
+<li>unk는 0, pad는 1의 정수가 부여된다.</li>
+</ul>
+<p>(+) 데이터로더 만들기 : 특정 배치크기로 데이터를 로드하도록 하는 데이터 로더를 만든다. torchtext.data의 Iterator를 사용해 만들 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torchtext.data <span class="keyword">import</span> Iterator</span><br><span class="line"></span><br><span class="line"><span class="comment"># 배치사이즈 100으로 훈련데이터에 대한 데이터로더를 만든다</span></span><br><span class="line">train_loader = Iterator(dataset=train_data, batch_size=<span class="number">100</span>)</span><br><span class="line">print(<span class="string">"len of train data : "</span>, len(train_data), <span class="string">" | num of batches : "</span>, len(train_loader))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[결과]</span><br><span class="line">len of train data :  40000  | num of batches :  400</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="실습-2-네이버-영화데이터-분류하기-한국어"><a href="#실습-2-네이버-영화데이터-분류하기-한국어" class="headerlink" title="실습 2. 네이버 영화데이터 분류하기(한국어)"></a>실습 2. 네이버 영화데이터 분류하기(한국어)</h3><p>: 이전 IMDB데이터를 토치텍스트로 전처리 한 것과 마찬가지의 과정으로 진행한다.</p>
+<ol>
+<li>네이버 영화리뷰데이터 다운</li>
+<li>훈련데이터/테스트 데이터로 분류</li>
+<li>필드 정의하기(전처리 방식 지정)</li>
+<li>데이터셋 제작하기(전처리 수행)</li>
+<li>단어집합 생성/정수인코딩 수행</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 한국어 형태소 분석기 Mecab 설치</span></span><br><span class="line">!git clone https://github.com/SOMJANG/Mecab-ko-<span class="keyword">for</span>-Google-Colab.git</span><br><span class="line">%cd Mecab-ko-<span class="keyword">for</span>-Google-Colab</span><br><span class="line">!bash install_mecab-ko_on_colab190912.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 네이버 영화 리뷰데이터 다운</span></span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">urllib.request.urlretrieve(<span class="string">"https://raw.githubusercontent.com/e9t/nsmc/master/ratings_train.txt"</span>, filename=<span class="string">"ratings_train.txt"</span>)</span><br><span class="line">urllib.request.urlretrieve(<span class="string">"https://raw.githubusercontent.com/e9t/nsmc/master/ratings_test.txt"</span>, filename=<span class="string">"ratings_test.txt"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 훈련 데이터와 테스트 데이터로 분리한다.</span></span><br><span class="line">train_data = pd.read_table(<span class="string">'ratings_train.txt'</span>)</span><br><span class="line">test_data = pd.read_table(<span class="string">'ratings_test.txt'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> torchtext <span class="keyword">import</span> data</span><br><span class="line"><span class="keyword">from</span> konlpy.tag <span class="keyword">import</span> Mecab</span><br><span class="line"></span><br><span class="line"><span class="comment"># 필드 정의하기(전처리 방식 지정)</span></span><br><span class="line">TEXT = data.Field(sequential=<span class="literal">True</span>,</span><br><span class="line">                  use_vocab=<span class="literal">True</span>, <span class="comment"># 단어집합을 만든다</span></span><br><span class="line">                  tokenize=Mecab().morphs, <span class="comment"># 토크나이저로는 Mecab 사용.</span></span><br><span class="line">                  lower=<span class="literal">True</span>,</span><br><span class="line">                  batch_first=<span class="literal">True</span>,</span><br><span class="line">                  fix_length=<span class="number">20</span>) <span class="comment"># 패딩 길이는 20</span></span><br><span class="line"></span><br><span class="line">LABEL = data.Field(sequential=<span class="literal">False</span>,</span><br><span class="line">                   use_vocab=<span class="literal">False</span>,</span><br><span class="line">                   is_target=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ID필드는 사용하지 않는다. </span></span><br><span class="line"><span class="comment"># 디민 TabularDataset.splits()은 받은 데이터를 앞에서부터 순서대로 자르므로 필요함.</span></span><br><span class="line"><span class="comment"># 네이버 영화리뷰 데이터는 [리뷰아이디, 리뷰, 라벨] 세가지로 이뤄져있기 때문</span></span><br><span class="line">ID = data.Field(sequential=<span class="literal">False</span>,  </span><br><span class="line">                   use_vocab=<span class="literal">False</span>,)</span><br><span class="line">                   </span><br><span class="line"><span class="keyword">from</span> torchtext.data <span class="keyword">import</span> TabularDataset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 데이터셋 제작하기(전처리 수행)</span></span><br><span class="line">train_data, test_data = TabularDataset.splits(</span><br><span class="line">        path=<span class="string">'.'</span>, train=<span class="string">'ratings_train.txt'</span>, test=<span class="string">'ratings_test.txt'</span>, format=<span class="string">'tsv'</span>,</span><br><span class="line">        fields=[(<span class="string">'id'</span>, ID), (<span class="string">'text'</span>, TEXT), (<span class="string">'label'</span>, LABEL)], skip_header=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'훈련 샘플의 개수 : &#123;&#125;'</span>.format(len(train_data)))</span><br><span class="line">print(<span class="string">'테스트 샘플의 개수 : &#123;&#125;'</span>.format(len(test_data)))</span><br><span class="line">print(<span class="string">'훈련 데이터 예제 : &#123;&#125;'</span>.format(vars(train_data[<span class="number">0</span>])))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[결과]</span><br><span class="line">훈련 샘플의 개수 : 150000</span><br><span class="line">테스트 샘플의 개수 : 50000</span><br><span class="line">훈련 데이터 예제 : &#123;&#39;id&#39;: &#39;9976970&#39;, &#39;text&#39;: [&#39;아&#39;, &#39;더&#39;, &#39;빙&#39;, &#39;.&#39;, &#39;.&#39;, &#39;진짜&#39;, &#39;짜증&#39;, &#39;나&#39;, &#39;네요&#39;, &#39;목소리&#39;], &#39;label&#39;: &#39;0&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 단어집합을 생성한다(정수인코딩 수행)</span></span><br><span class="line">TEXT.build_vocab(train_data, min_freq=<span class="number">10</span>, max_size=<span class="number">10000</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 생성된 단어집합 내 단어 확인해보기</span></span><br><span class="line">print(<span class="string">'단어 "좋아"의 인덱스는 [&#123;&#125;]'</span>.format(TEXT.vocab.stoi[<span class="string">'좋아'</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[결과]</span><br><span class="line">단어 &quot;좋아&quot;의 인덱스는 [8343]</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/RNN/" rel="tag">RNN</a>, <a class="has-link-grey -link" href="/tags/torchtext/" rel="tag">torchtext</a>, <a class="has-link-grey -link" href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D/" rel="tag">딥러닝</a>, <a class="has-link-grey -link" href="/tags/%EC%88%9C%ED%99%98%EC%8B%A0%EA%B2%BD%EB%A7%9D/" rel="tag">순환신경망</a>, <a class="has-link-grey -link" href="/tags/%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8/" rel="tag">언어모델</a>, <a class="has-link-grey -link" href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4-%EC%A0%84%EC%B2%98%EB%A6%AC/" rel="tag">자연어 전처리</a>, <a class="has-link-grey -link" href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC/" rel="tag">자연어처리</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/02/19/ai-study6/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">[딥러닝 스터디] 글자 단위 RNN(Char RNN) 실습</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/02/17/ai-study4/">
+                <span class="level-item">[딥러닝 스터디] 자연어 처리의 전처리</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">댓글</h3>
+        <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ko/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-comments" data-width="100%" data-href="https://katie0809.github.io/2020/02/17/ai-study5/" data-num-posts="5"></div>
+<link rel="stylesheet" href="/css/facebook.css">
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    목차
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#토치텍스트">
+        <span class="has-mr-6">1</span>
+        <span>토치텍스트</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#토치텍스트-제공-기능">
+        <span class="has-mr-6">1.1</span>
+        <span>토치텍스트 제공 기능</span>
+        </a></li><li>
+        <a class="is-flex" href="#실습-1-IMDB-리뷰데이터-분류하기-영어">
+        <span class="has-mr-6">1.2</span>
+        <span>실습 1. IMDB 리뷰데이터 분류하기(영어)</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#데이터-다운-및-용도에-따른-분류-진행-훈련-테스트">
+        <span class="has-mr-6">1.2.1</span>
+        <span>데이터 다운 및 용도에 따른 분류 진행(훈련/테스트)</span>
+        </a></li><li>
+        <a class="is-flex" href="#필드-정의하기-torchtext-data">
+        <span class="has-mr-6">1.2.2</span>
+        <span>필드 정의하기(torchtext.data)</span>
+        </a></li><li>
+        <a class="is-flex" href="#단어집합을-생성한다">
+        <span class="has-mr-6">1.2.3</span>
+        <span>단어집합을 생성한다.</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#실습-2-네이버-영화데이터-분류하기-한국어">
+        <span class="has-mr-6">1.3</span>
+        <span>실습 2. 네이버 영화데이터 분류하기(한국어)</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">
+            <span class="level-start">
+                <span class="level-item">개발자 공부</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">
+            <span class="level-start">
+                <span class="level-item">인공지능</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/">
+            <span class="level-start">
+                <span class="level-item">그냥 그런 일상</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/%EA%B7%B8%EB%A0%87%EA%B2%8C-%EB%B0%94%EB%B3%B4%EB%8A%94-%EC%95%84%EB%8B%98/">
+            <span class="level-start">
+                <span class="level-item">그렇게 바보는 아님</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/%EB%81%84%EC%A0%81%EB%81%84%EC%A0%81/">
+            <span class="level-start">
+                <span class="level-item">끄적끄적</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/RNN/" style="font-size: 16px;">RNN</a> <a href="/tags/YAMLException/" style="font-size: 10px;">YAMLException</a> <a href="/tags/githubpage/" style="font-size: 10px;">githubpage</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/linear-regression/" style="font-size: 12px;">linear regression</a> <a href="/tags/logistic-regression/" style="font-size: 10px;">logistic regression</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/torchtext/" style="font-size: 10px;">torchtext</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D/" style="font-size: 18px;">딥러닝</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88/" style="font-size: 16px;">딥러닝기초</a> <a href="/tags/%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80/" style="font-size: 10px;">로지스틱 회귀</a> <a href="/tags/%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80/" style="font-size: 12px;">선형회귀</a> <a href="/tags/%EC%88%9C%ED%99%98%EC%8B%A0%EA%B2%BD%EB%A7%9D/" style="font-size: 14px;">순환신경망</a> <a href="/tags/%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8/" style="font-size: 18px;">언어모델</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4-%EC%A0%84%EC%B2%98%EB%A6%AC/" style="font-size: 12px;">자연어 전처리</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC/" style="font-size: 18px;">자연어처리</a> <a href="/tags/%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%9E%84%EB%B2%A0%EB%94%A9/" style="font-size: 16px;">한국어 임베딩</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="[딥러닝 스터디] 자연어 전처리 실습" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Kyungim Lee&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external nofollow noopener noreferrer">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("ko");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://katie0809.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" rel="external nofollow noopener noreferrer" target="_blank">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '포스트',
+                PAGES: '페이지',
+                CATEGORIES: '카테고리',
+                TAGS: '태그',
+                UNTITLED: '(제목없음)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
