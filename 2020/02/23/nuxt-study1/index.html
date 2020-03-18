@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="naver-site-verification" content="9abfedc8a2f9ddcb2cd0a96e6a2772ddc7b87e51">
+
+<link rel="canonical" href="https://katie0809.github.io/2020/02/23/nuxt-study1/">
+<title>Introduction to Nuxt.js - Dailycrush</title>
+
+
+    <meta name="description" content="Nuxt.js is a framework for creating Vue.js application. There are some awesome features that nuxt.js provides.  SEO with Server Side Rendering (SSR) Pre Rendering Code Splitting  이런 기능을 서비스에 직접 구현해낼 필">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction to Nuxt.js">
+<meta property="og:url" content="https://katie0809.github.io/2020/02/23/nuxt-study1/index.html">
+<meta property="og:site_name" content="Dailycrush">
+<meta property="og:description" content="Nuxt.js is a framework for creating Vue.js application. There are some awesome features that nuxt.js provides.  SEO with Server Side Rendering (SSR) Pre Rendering Code Splitting  이런 기능을 서비스에 직접 구현해낼 필">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://katie0809.github.io/image/Elegant_Background-3.jpg">
+<meta property="article:published_time" content="2020-02-23T10:43:11.000Z">
+<meta property="article:modified_time" content="2020-02-24T23:37:58.521Z">
+<meta property="article:author" content="Kyungim Lee">
+<meta property="article:tag" content="nuxtjs">
+<meta property="article:tag" content="vuejs">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="vueschool.io">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://katie0809.github.io/image/Elegant_Background-3.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/monokai-sublime.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158681991-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-158681991-1');
+</script>
+
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/rss2.xml" title="Dailycrush" type="application/rss+xml">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Introduction to Nuxt.js" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/downloads">Downloads</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="목차" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="검색" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/image/Elegant_Background-3.jpg" alt="Introduction to Nuxt.js">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-23T10:43:11.000Z">2020-02-23</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/Javascript/">Javascript</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/Javascript/Nuxt-js/">Nuxt.js</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9분 소요 (약 1377 글자)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Introduction to Nuxt.js
+            
+        </h1>
+        <div class="content">
+            <p>Nuxt.js is a <strong>framework</strong> for creating Vue.js application.</p>
+<p>There are some awesome features that nuxt.js provides.</p>
+<ul>
+<li>SEO with Server Side Rendering (SSR)</li>
+<li>Pre Rendering</li>
+<li>Code Splitting</li>
+</ul>
+<p>이런 기능을 서비스에 직접 구현해낼 필요 없이 Nuxt를 사용함으로서 benefit을 얻을 수 있다.</p>
+<a id="more"></a>
+
+<h1 id="What-is-Nuxt-js"><a href="#What-is-Nuxt-js" class="headerlink" title="What is Nuxt.js?"></a>What is Nuxt.js?</h1><h2 id="Server-Side-Rendering"><a href="#Server-Side-Rendering" class="headerlink" title="Server Side Rendering"></a>Server Side Rendering</h2><h3 id="Benefits"><a href="#Benefits" class="headerlink" title="Benefits"></a>Benefits</h3><ul>
+<li>Search Engine Optimization(검색엔진 최적화)</li>
+<li>Meta Tags</li>
+<li>Performance</li>
+</ul>
+<h3 id="Why-SSR"><a href="#Why-SSR" class="headerlink" title="Why SSR?"></a>Why SSR?</h3><blockquote>
+<p>One of the common problems javascript developers have is that it is <u>hard to deal with SEO and Meta Tags</u>.</p>
+</blockquote>
+<p>: 처음 fetch로 데이터 로드할때 페이지는 비어있는 상태(The page is empty on the initial load of something like the content and meta titles). 뿐만 아니라 자바스크립트가 실행되면 <code>there is no content to index or parse</code>. </p>
+<p>=&gt; 따라서 많은 크롤링 시스템은 자바스크립트를 지원하지 않는다. 즉, 자바스크립트로 만든 페이지는 실제 제목이 아닌 title of undefined로 검색엔진에 보이는 것. </p>
+<h3 id="SSR-key-ideas"><a href="#SSR-key-ideas" class="headerlink" title="SSR key ideas"></a>SSR key ideas</h3><p>: 이에 대한 해결책으로 SSR이 등장하게 된다. SSR의 아이디어는 다음과 같다.</p>
+<ul>
+<li>실행중인 서버가 있으며, 이는 <code>html응답을 생성(create the html response)</code> 한다.</li>
+<li>생성된 응답은 클라이언트나 크롤링 시스템에 사용된다(serve it to the client or the crawler)</li>
+<li>따라서 API콜은 서버에서 실행되며,(the call to the API would take place on the server) 실행이 완료되면 메타데이터와 최종 페이지가 생성된다(the meta data will be set and the final page will be served).</li>
+<li>최종적으로 크롤링 시스템이 필요로 하는 SEO정보와 메타테그는 크롤링 되는 시점에 페이지 내에 존재하게 된다.</li>
+</ul>
+<p>뿐만 아니라 페이지를 서버에서 렌더링 함으로서 속도적인 이득을 볼 수 있다.</p>
+<h3 id="Pre-Rendering"><a href="#Pre-Rendering" class="headerlink" title="Pre Rendering"></a>Pre Rendering</h3><p>: Pre rendering 기법을 통해 서버가 페이지의 생성과 배포를 담당하도록 하는 대신 페이지가 먼저 생성되게 된다(?).(Instead of having a server to generate and serve a page, the <code>pages are generated upfront</code>)</p>
+<p>따라서</p>
+<ol>
+<li>배포 폴더는 각 페이지에 대해 <strong>하나의 html파일</strong>을 갖게 된다.</li>
+<li>따라서 트래픽이 많은 서비스에 대해서도 무료로 호스팅이 가능하다(SSR benefits + free hosting).</li>
+</ol>
+<h3 id="Code-Splitting"><a href="#Code-Splitting" class="headerlink" title="Code Splitting"></a>Code Splitting</h3><p>: Nuxt는 어플리케이션이 code-splitting 되도록 한다.</p>
+<blockquote>
+<p>Code splitting : 자바스크립트 코드를 multiple files로 split하기위한 테크닉.</p>
+<p>=&gt; 서비스의 비용 절감, 속도 향상</p>
+</blockquote>
+<h4 id="예시"><a href="#예시" class="headerlink" title="예시"></a>예시</h4><ul>
+<li><p>서비스 전체에 총 100개의 컴포넌트가 있고, 메인 페이지에서는 10개의 컴포넌트만 사용하는 경우</p>
+<p>: 메인 페이지에서 사용되는 자바스크립트 파일(or 번들)은 사용되지 않는 컴포넌트까지 포함하고 있을 필요가 없다.</p>
+<p>Nuxt는 자동적으로 각 페이지에 대한 자바스크립트 파일을 생성하여 프로젝트의 의존관계를 관리한다(take care of the project’s dependencies). </p>
+</li>
+</ul>
+<h1 id="Create-Nuxt-App"><a href="#Create-Nuxt-App" class="headerlink" title="Create Nuxt App"></a>Create Nuxt App</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-nuxt-app nuxt-fundamentals</span><br></pre></td></tr></table></figure>
+
+<p><img src="/image/nuxtapp.png" alt></p>
+<ul>
+<li>서버사이드 렌더링을 사용할 것이므로 렌더링 모드만 Universal로 해주도록 한다.</li>
+<li>Official scaffolding tool <code>create-nuxt-app</code> 사용한다.</li>
+<li>npx는 npm 5.2.0버전부터 기본적으로 제공된다.</li>
+<li>맥을 사용한다면 명령어 앞에 sudo를 사용해줘야 한다(플젝 돌릴때도 마찬가지)</li>
+</ul>
+<p>설치 완료됐으면 프로젝트를 실행시켜보자. 프로젝트 폴더로 들어가서 npm혹은 yarn명령어 실행</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<h1 id="Guided-Nuxt-js-Project-Tour"><a href="#Guided-Nuxt-js-Project-Tour" class="headerlink" title="Guided Nuxt.js Project Tour"></a>Guided Nuxt.js Project Tour</h1><p>: In this lesson, we’ll show you around in our newly created Nuxt project. </p>
+<p>Please note that <strong>each directory includes a readme file</strong>, that explains <code>what the directory is</code>. You can safely delete the directories of the features you do not need.</p>
+<p><img src="/image/nuxt2.png" alt="생성된 Nuxt.js 앱 프로젝트 구조"></p>
+<table>
+<thead>
+<tr>
+<th>폴더명</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>assets</td>
+<td>- 아직 컴파일되지 않은 asset들을 포함한다(SASS, 이미지, 폰트 등). <br>- vue cli 프로젝트의 asset 디렉터리와 같은 역할을 한다.</td>
+</tr>
+<tr>
+<td>components</td>
+<td>- vue.js 컴포넌트들이 위치하는 디렉터리.</td>
+</tr>
+<tr>
+<td>layouts</td>
+<td>- 말 그대로 페이지의 레이아웃을 저장하는 디렉터리.<br>- 기본 레이아웃, 갤러리 레이아웃 같이 원하는 커스텀 레이아웃 저장.</td>
+</tr>
+<tr>
+<td>middleware</td>
+<td>- 미들웨어를 저장하는 디렉터리.<br>- 페이지가 렌더링되기 전에 실행가능한 함수 등을 정의할 수 있다.</td>
+</tr>
+<tr>
+<td>pages</td>
+<td>- Contains your application views and routes<br>- nuxt는 이 디렉터리에 있는 모든 vue파일을 읽어 자동으로 application router를 생성한다.</td>
+</tr>
+<tr>
+<td>plugins</td>
+<td>- 자바스크립트 플러그인을 포함한다.<br>- 해당 플러그인들은 instantiating the route vue instance하기 전에 실행된다.<br>- 전역 컴포넌트를 등록하거나 상수/함수를 삽입하는 위치이기도 하다(register the components globally or to inject functions or constants).</td>
+</tr>
+<tr>
+<td>static</td>
+<td>- static 파일을 저장한다. 해당 파일들은 자동으로 서버의 루트위치에 저장된다(automatically mapped to the server’s root).<br>- 해당 위치에 저장된 파일은 <code>웹사이트 url/파일명</code> 으로 접근이 가능하다.</td>
+</tr>
+<tr>
+<td>store</td>
+<td>- Contains your Vuex Store<br>- Vuex Store는 별도의 설치나 구성 없이 Nuxt에서 바로 사용할 수 있지만(out of the box), 디폴트로 disable되어있다.</td>
+</tr>
+</tbody></table>
+<ul>
+<li>각 디렉터리의 Readme.md 파일에는 해당 디렉터리의 기능이 소개되어있다. </li>
+<li>필요없는 기능의 디렉터리는 걍 지우면 됨.</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/javascript/" rel="tag">javascript</a>, <a class="has-link-grey -link" href="/tags/nuxtjs/" rel="tag">nuxtjs</a>, <a class="has-link-grey -link" href="/tags/vue/" rel="tag">vue</a>, <a class="has-link-grey -link" href="/tags/vuejs/" rel="tag">vuejs</a>, <a class="has-link-grey -link" href="/tags/vueschool-io/" rel="tag">vueschool.io</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/02/24/nuxt-study2/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Working with Nuxt.js</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/02/23/ai-study7/">
+                <span class="level-item">[딥러닝 스터디] Attention을 활용한 기계번역</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">댓글</h3>
+        <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ko/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-comments" data-width="100%" data-href="https://katie0809.github.io/2020/02/23/nuxt-study1/" data-num-posts="5"></div>
+<link rel="stylesheet" href="/css/facebook.css">
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    목차
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#What-is-Nuxt-js">
+        <span class="has-mr-6">1</span>
+        <span>What is Nuxt.js?</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Server-Side-Rendering">
+        <span class="has-mr-6">1.1</span>
+        <span>Server Side Rendering</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Benefits">
+        <span class="has-mr-6">1.1.1</span>
+        <span>Benefits</span>
+        </a></li><li>
+        <a class="is-flex" href="#Why-SSR">
+        <span class="has-mr-6">1.1.2</span>
+        <span>Why SSR?</span>
+        </a></li><li>
+        <a class="is-flex" href="#SSR-key-ideas">
+        <span class="has-mr-6">1.1.3</span>
+        <span>SSR key ideas</span>
+        </a></li><li>
+        <a class="is-flex" href="#Pre-Rendering">
+        <span class="has-mr-6">1.1.4</span>
+        <span>Pre Rendering</span>
+        </a></li><li>
+        <a class="is-flex" href="#Code-Splitting">
+        <span class="has-mr-6">1.1.5</span>
+        <span>Code Splitting</span>
+        </a></li></ul></li></ul></li><li>
+        <a class="is-flex" href="#Create-Nuxt-App">
+        <span class="has-mr-6">2</span>
+        <span>Create Nuxt App</span>
+        </a></li><li>
+        <a class="is-flex" href="#Guided-Nuxt-js-Project-Tour">
+        <span class="has-mr-6">3</span>
+        <span>Guided Nuxt.js Project Tour</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">
+            <span class="level-start">
+                <span class="level-item">개발자 공부</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">14</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/JSP/">
+            <span class="level-start">
+                <span class="level-item">JSP</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/Javascript/">
+            <span class="level-start">
+                <span class="level-item">Javascript</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">
+            <span class="level-start">
+                <span class="level-item">인공지능</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">11</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/">
+            <span class="level-start">
+                <span class="level-item">그냥 그런 일상</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/%EA%B7%B8%EB%A0%87%EA%B2%8C-%EB%B0%94%EB%B3%B4%EB%8A%94-%EC%95%84%EB%8B%98/">
+            <span class="level-start">
+                <span class="level-item">그렇게 바보는 아님</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/%EB%81%84%EC%A0%81%EB%81%84%EC%A0%81/">
+            <span class="level-start">
+                <span class="level-item">끄적끄적</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/RNN/" style="font-size: 15px;">RNN</a> <a href="/tags/YAMLException/" style="font-size: 10px;">YAMLException</a> <a href="/tags/change-permission/" style="font-size: 10px;">change permission</a> <a href="/tags/folder-permission/" style="font-size: 10px;">folder permission</a> <a href="/tags/githubpage/" style="font-size: 10px;">githubpage</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/inflearn/" style="font-size: 10px;">inflearn</a> <a href="/tags/javascript/" style="font-size: 11.67px;">javascript</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/linear-regression/" style="font-size: 11.67px;">linear regression</a> <a href="/tags/logistic-regression/" style="font-size: 10px;">logistic regression</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/nuxtjs/" style="font-size: 11.67px;">nuxtjs</a> <a href="/tags/pytorch/" style="font-size: 20px;">pytorch</a> <a href="/tags/tensorflow/" style="font-size: 10px;">tensorflow</a> <a href="/tags/torchtext/" style="font-size: 10px;">torchtext</a> <a href="/tags/vue/" style="font-size: 11.67px;">vue</a> <a href="/tags/vuejs/" style="font-size: 11.67px;">vuejs</a> <a href="/tags/vueschool-io/" style="font-size: 11.67px;">vueschool.io</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D/" style="font-size: 18.33px;">딥러닝</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88/" style="font-size: 15px;">딥러닝기초</a> <a href="/tags/%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80/" style="font-size: 10px;">로지스틱 회귀</a> <a href="/tags/%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80/" style="font-size: 11.67px;">선형회귀</a> <a href="/tags/%EC%88%9C%ED%99%98%EC%8B%A0%EA%B2%BD%EB%A7%9D/" style="font-size: 13.33px;">순환신경망</a> <a href="/tags/%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8/" style="font-size: 16.67px;">언어모델</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4-%EC%A0%84%EC%B2%98%EB%A6%AC/" style="font-size: 11.67px;">자연어 전처리</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC/" style="font-size: 18.33px;">자연어처리</a> <a href="/tags/%EC%BC%80%EB%9D%BC%EC%8A%A4/" style="font-size: 10px;">케라스</a> <a href="/tags/%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%9E%84%EB%B2%A0%EB%94%A9/" style="font-size: 15px;">한국어 임베딩</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Introduction to Nuxt.js" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Kyungim Lee&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external nofollow noopener noreferrer">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("ko");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://katie0809.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" rel="external nofollow noopener noreferrer" target="_blank">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '포스트',
+                PAGES: '페이지',
+                CATEGORIES: '카테고리',
+                TAGS: '태그',
+                UNTITLED: '(제목없음)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
