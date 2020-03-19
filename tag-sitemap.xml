@@ -4,49 +4,70 @@
 
     <url>
         <loc>https://katie0809.github.io/tags/Attention/</loc>
-        <lastmod>2020-03-18T08:36:07.145Z</lastmod>
+        <lastmod>2020-03-19T03:20:02.562Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://katie0809.github.io/tags/%25EC%25BC%2580%25EB%259D%25BC%25EC%258A%25A4/</loc>
-        <lastmod>2020-03-18T08:36:07.145Z</lastmod>
+        <lastmod>2020-03-19T03:20:02.562Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://katie0809.github.io/tags/%25ED%2595%259C%25EA%25B5%25AD%25EC%2596%25B4-%25EC%259E%2584%25EB%25B2%25A0%25EB%2594%25A9/</loc>
-        <lastmod>2020-03-18T08:36:07.145Z</lastmod>
+        <lastmod>2020-03-19T03:20:02.562Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://katie0809.github.io/tags/%25EC%2596%25B8%25EC%2596%25B4%25EB%25AA%25A8%25EB%258D%25B8/</loc>
-        <lastmod>2020-03-18T08:36:07.145Z</lastmod>
+        <lastmod>2020-03-19T03:20:02.562Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://katie0809.github.io/tags/%25EB%2594%25A5%25EB%259F%25AC%25EB%258B%259D/</loc>
-        <lastmod>2020-03-18T08:36:07.145Z</lastmod>
+        <lastmod>2020-03-19T03:20:02.562Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://katie0809.github.io/tags/%25EC%259E%2590%25EC%2597%25B0%25EC%2596%25B4%25EC%25B2%2598%25EB%25A6%25AC/</loc>
-        <lastmod>2020-03-18T08:36:07.145Z</lastmod>
+        <lastmod>2020-03-19T03:20:02.562Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://katie0809.github.io/tags/pytorch/</loc>
-        <lastmod>2020-03-18T08:36:07.145Z</lastmod>
+        <lastmod>2020-03-19T03:20:02.562Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://katie0809.github.io/tags/Keras/</loc>
+        <lastmod>2020-03-19T00:40:09.297Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://katie0809.github.io/tags/tensorflow/</loc>
+        <lastmod>2020-03-19T00:40:09.297Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://katie0809.github.io/tags/RNN/</loc>
+        <lastmod>2020-03-19T00:40:09.297Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -82,27 +103,6 @@
     <url>
         <loc>https://katie0809.github.io/tags/mac/</loc>
         <lastmod>2020-03-10T06:15:03.291Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://katie0809.github.io/tags/Keras/</loc>
-        <lastmod>2020-03-10T06:15:02.440Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://katie0809.github.io/tags/tensorflow/</loc>
-        <lastmod>2020-03-10T06:15:02.440Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://katie0809.github.io/tags/RNN/</loc>
-        <lastmod>2020-03-10T06:15:02.440Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

@@ -21,7 +21,7 @@
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://katie0809.github.io/image/Elegant_Background-2.jpg">
 <meta property="article:published_time" content="2020-02-23T07:54:46.000Z">
-<meta property="article:modified_time" content="2020-03-18T08:36:07.145Z">
+<meta property="article:modified_time" content="2020-03-19T03:20:02.562Z">
 <meta property="article:author" content="Kyungim Lee">
 <meta property="article:tag" content="pytorch">
 <meta property="article:tag" content="자연어처리">
@@ -165,7 +165,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9분 소요 (약 1341 글자)
+                    12분 소요 (약 1865 글자)
                 </span>
                 
                 
@@ -240,11 +240,36 @@
 <blockquote>
 <p><strong>Attention score</strong> : 인코더의 <strong>각 은닉상태 h1 - hn</strong>이 현재 시점의 디코더 은닉상태 <strong>st</strong>와 <code>얼마나 유사한지</code>의 정도</p>
 </blockquote>
-<p>닷 프로덕트 어텐션에서는 이 스코어 값을 구하기 위해 st와 hi(i : 1~n)를 닷 프로덕트 한다. 이때 둘다 열벡터이므로 디코더의 은닉상태 st값을 전치하여 내적한다.</p>
+<p>닷 프로덕트 어텐션에서는 이 스코어 값을 구하기 위해 <u>st와 hi(i : 1~n)를 닷 프로덕트 한다</u>. 이때 둘다 열벡터이므로 디코더의 은닉상태 st값을 전치하여 내적한다.</p>
 <p>따라서 dot product attention의 attention score 함수 수식은 다음과 같다.</p>
 <blockquote>
 <p>score(st, hi) = stT * hi</p>
 </blockquote>
+<p>따라서 디코더의 현재 시점 t에 대한 은닉상태 st와 인코더의 모든 시점에 대한 은닉상태의 어텐션 스코어의 모음(et)은 아래와 같다.</p>
+<blockquote>
+<p>et = [stT * h1, …, stT * hN]</p>
+</blockquote>
+<h3 id="Step-2-Softmax를-통해-Attention-Distribution-어텐션-분포-를-구한다"><a href="#Step-2-Softmax를-통해-Attention-Distribution-어텐션-분포-를-구한다" class="headerlink" title="Step 2. Softmax를 통해 Attention Distribution(어텐션 분포)를 구한다."></a>Step 2. Softmax를 통해 Attention Distribution(어텐션 분포)를 구한다.</h3><p><img src="https://wikidocs.net/images/page/22893/dotproductattention3_final.PNG" alt></p>
+<p>구해낸 모든 어텐션 스코어의 모음, <u>et에 <strong>softmax</strong>를 적용해 확률 분포를 얻어낸다</u>. </p>
+<p>이를 통해 얻어낸 분포를 <code>Attention Distribution</code>(어텐션 분포)라 하며, 각각의 값을 <code>Attention Weight</code>(어텐션 가중치)라고 한다.</p>
+<p><strong>어텐션 분포와 어텐션 값</strong>은 <code>디코더의 현재시점 t에 대해 정의</code>된다.</p>
+<blockquote>
+<p>Attention Distribution : 어텐션 스코어의 모음에 softmax를 적용해 얻어낸 확률분포. 어텐션 가중치의 모음값</p>
+<p>Attention Weight : 어텐션 분포의 각각의 값</p>
+</blockquote>
+<p>따라서 어텐션 분포를 αt의 식은 다음과 같다.</p>
+<blockquote>
+<p>αt = softmax(et)</p>
+</blockquote>
+<h3 id="Step-3-Attention-Weight과-인코더-은닉상태를-가중합하여-Attention-Value를-구한다"><a href="#Step-3-Attention-Weight과-인코더-은닉상태를-가중합하여-Attention-Value를-구한다" class="headerlink" title="Step 3. Attention Weight과 인코더 은닉상태를 가중합하여 Attention Value를 구한다."></a>Step 3. Attention Weight과 인코더 은닉상태를 가중합하여 Attention Value를 구한다.</h3><p><img src="https://wikidocs.net/images/page/22893/dotproductattention4_final.PNG" alt></p>
+<p>구해낸 Attention Distribution의 각 <strong>Attention Weight</strong>들을 <strong>해당 시점의 인코더 은닉상태(h1 ~ hN)</strong>와 <code>가중합(Weighted sum)</code> 한다. </p>
+<p><strong>결과로 나오는 벡터 a</strong>는 최종 어텐션 값, 즉 <u>Attention Value</u>가 되며 이는 인코더의 문맥을 내포하고 있다는 의미에서 <u>Context Vector</u>라고 부르기도 한다.</p>
+<blockquote>
+<p>a = ∑αti * hi (i : 1~N, ati : i번째 어텐션 분포의 값)</p>
+</blockquote>
+<h3 id="Step-4-어텐션-값과-현재-상태-대코더의-은닉상태-st를-연결한다-Concatenation"><a href="#Step-4-어텐션-값과-현재-상태-대코더의-은닉상태-st를-연결한다-Concatenation" class="headerlink" title="Step 4. 어텐션 값과 현재 상태 대코더의 은닉상태 st를 연결한다(Concatenation)."></a>Step 4. 어텐션 값과 현재 상태 대코더의 은닉상태 st를 연결한다(Concatenation).</h3><p><img src="https://wikidocs.net/images/page/22893/dotproductattention5_final_final.PNG" alt></p>
+<p>최종적으로 구해낸 어텐션 값(컨텍스트 벡터) a를 현재 시점의 디코더 은닉상태 st와 결합한다. 이때 둘을 연결해 하나의 벡터로 만드는(concatenation) 작업을 수행한다.</p>
+<p>해당 결합 작업을 통해 산출된 최종 벡터 vt는 t시점의 디코더 예측값 y_hat를 도출하기 위한 연산의 입력값으로 사용된다.</p>
 <hr>
 <h1 id="Neural-machine-translation-with-attention"><a href="#Neural-machine-translation-with-attention" class="headerlink" title="Neural machine translation with attention"></a>Neural machine translation with attention</h1><ul>
 <li>스페인어에서 영어로 기계번역을 수행하는 seq2seq 모델을 직접 구현해본다.</li>
@@ -344,6 +369,18 @@
         <a class="is-flex" href="#Step-1-어텐션-스코어를-구한다">
         <span class="has-mr-6">2.2.1</span>
         <span>Step 1. 어텐션 스코어를 구한다.</span>
+        </a></li><li>
+        <a class="is-flex" href="#Step-2-Softmax를-통해-Attention-Distribution-어텐션-분포-를-구한다">
+        <span class="has-mr-6">2.2.2</span>
+        <span>Step 2. Softmax를 통해 Attention Distribution(어텐션 분포)를 구한다.</span>
+        </a></li><li>
+        <a class="is-flex" href="#Step-3-Attention-Weight과-인코더-은닉상태를-가중합하여-Attention-Value를-구한다">
+        <span class="has-mr-6">2.2.3</span>
+        <span>Step 3. Attention Weight과 인코더 은닉상태를 가중합하여 Attention Value를 구한다.</span>
+        </a></li><li>
+        <a class="is-flex" href="#Step-4-어텐션-값과-현재-상태-대코더의-은닉상태-st를-연결한다-Concatenation">
+        <span class="has-mr-6">2.2.4</span>
+        <span>Step 4. 어텐션 값과 현재 상태 대코더의 은닉상태 st를 연결한다(Concatenation).</span>
         </a></li></ul></li></ul></li><li>
         <a class="is-flex" href="#Neural-machine-translation-with-attention">
         <span class="has-mr-6">3</span>

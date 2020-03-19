@@ -9,7 +9,15 @@
 
     <url>
         <loc>https://katie0809.github.io/2020/02/23/ai-study7/</loc>
-        <lastmod>2020-03-18T08:36:07.145Z</lastmod>
+        <lastmod>2020-03-19T03:20:02.562Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://katie0809.github.io/2020/02/19/ai-study6/</loc>
+        <lastmod>2020-03-19T00:40:09.297Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -26,14 +34,6 @@
     <url>
         <loc>https://katie0809.github.io/2020/02/24/change-permission/</loc>
         <lastmod>2020-03-10T06:15:03.291Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://katie0809.github.io/2020/02/19/ai-study6/</loc>
-        <lastmod>2020-03-10T06:15:02.440Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
