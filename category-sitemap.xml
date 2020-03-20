@@ -8,15 +8,29 @@
     </url>
 
     <url>
-        <loc>https://katie0809.github.io/categories/%25EA%25B0%259C%25EB%25B0%259C%25EC%259E%2590-%25EA%25B3%25B5%25EB%25B6%2580/%25EC%259D%25B8%25EA%25B3%25B5%25EC%25A7%2580%25EB%258A%25A5/</loc>
-        <lastmod>2020-03-19T03:20:02.562Z</lastmod>
+        <loc>https://katie0809.github.io/categories/%25EA%25B0%259C%25EB%25B0%259C%25EC%259E%2590-%25EA%25B3%25B5%25EB%25B6%2580/Javascript/Vue-js/</loc>
+        <lastmod>2020-03-20T06:45:37.227Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://katie0809.github.io/categories/%25EA%25B0%259C%25EB%25B0%259C%25EC%259E%2590-%25EA%25B3%25B5%25EB%25B6%2580/Javascript/</loc>
+        <lastmod>2020-03-20T06:45:37.227Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://katie0809.github.io/categories/%25EA%25B0%259C%25EB%25B0%259C%25EC%259E%2590-%25EA%25B3%25B5%25EB%25B6%2580/</loc>
-        <lastmod>2020-03-19T03:20:02.562Z</lastmod>
+        <lastmod>2020-03-20T06:45:37.227Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://katie0809.github.io/categories/%25EA%25B0%259C%25EB%25B0%259C%25EC%259E%2590-%25EA%25B3%25B5%25EB%25B6%2580/%25EC%259D%25B8%25EA%25B3%25B5%25EC%25A7%2580%25EB%258A%25A5/</loc>
+        <lastmod>2020-03-19T05:28:53.952Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -44,13 +58,6 @@
 
     <url>
         <loc>https://katie0809.github.io/categories/%25EA%25B0%259C%25EB%25B0%259C%25EC%259E%2590-%25EA%25B3%25B5%25EB%25B6%2580/Javascript/Nuxt-js/</loc>
-        <lastmod>2020-02-24T23:37:58.523Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://katie0809.github.io/categories/%25EA%25B0%259C%25EB%25B0%259C%25EC%259E%2590-%25EA%25B3%25B5%25EB%25B6%2580/Javascript/</loc>
         <lastmod>2020-02-24T23:37:58.523Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>

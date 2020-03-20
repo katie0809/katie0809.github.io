@@ -8,13 +8,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="naver-site-verification" content="9abfedc8a2f9ddcb2cd0a96e6a2772ddc7b87e51">
 
-<link rel="canonical" href="https://katie0809.github.io/categories/개발자-공부/page/2/">
-<title>Category: 개발자 공부 - Dailycrush</title>
+<link rel="canonical" href="https://katie0809.github.io/categories/개발자-공부/javascript/vue-js/">
+<title>Category: Vue.js - Dailycrush</title>
 
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Dailycrush">
-<meta property="og:url" content="https://katie0809.github.io/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/page/2/index.html">
+<meta property="og:url" content="https://katie0809.github.io/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/Javascript/Vue-js/index.html">
 <meta property="og:site_name" content="Dailycrush">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://katie0809.github.io/images/og_image.png">
@@ -133,7 +133,11 @@
         <ul>
             <li><a href="/categories">Categories</a></li>
             
-            <li class="is-active"><a href="#" aria-current="page">개발자 공부</a></li>
+            <li><a href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/Javascript/">Javascript</a></li>
+            
+            <li><a href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a></li>
+            
+            <li class="is-active"><a href="#" aria-current="page">Vue.js</a></li>
         </ul>
         </nav>
     </div>
@@ -143,8 +147,8 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2020/02/17/ai-start4/" class="image is-7by1">
-            <img class="thumbnail" src="/image/Elegant_Background-1.jpg" alt="[딥러닝 기초] Logistic Regression">
+        <a href="/2020/03/20/vue-study2/" class="image is-7by1">
+            <img class="thumbnail" src="/image/Elegant_Background-3.jpg" alt="Vue.js 코딩가이드 : Strongly Recommended (Improving Readability)">
         </a>
     </div>
     
@@ -152,17 +156,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-17T00:49:40.000Z">2020-02-17</time>
+                <time class="level-item has-text-grey" datetime="2020-03-20T06:19:30.000Z">2020-03-20</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">인공지능</a>
+                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/Javascript/">Javascript</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/Javascript/Vue-js/">Vue.js</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    5분 소요 (약 804 글자)
+                    2분 소요 (약 284 글자)
                 </span>
                 
                 
@@ -171,25 +175,22 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/02/17/ai-start4/">[딥러닝 기초] Logistic Regression</a>
+                <a class="has-link-black-ter" href="/2020/03/20/vue-study2/">Vue.js 코딩가이드 : Strongly Recommended (Improving Readability)</a>
             
         </h1>
         <div class="content">
-            <p>다음의 책을 공부하며 정리한 내용입니다</p>
-<ul>
-<li><a href="https://wikidocs.net/book/2788" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/book/2788</a></li>
+            <p>참고한 문서는 <a href="https://vuejs.org/v2/style-guide/index.html" rel="external nofollow noopener noreferrer" target="_blank">Vue.js Official Style Guide</a> 이다.</p>
+<p>모든 가이드가 그렇듯, 절대적인 지표는 아니며 개발 방향을 정해주는 정도로 참고하면 되겠다. </p>
+<h1 id="Priority-B-Rules-Strongly-Recommended-Improving-Readability"><a href="#Priority-B-Rules-Strongly-Recommended-Improving-Readability" class="headerlink" title="Priority B Rules : Strongly Recommended (Improving Readability)"></a>Priority B Rules : Strongly Recommended (Improving Readability)</h1><h2 id="Component-files"><a href="#Component-files" class="headerlink" title="Component files"></a>Component files</h2><ul>
+<li>빌드시스템이 파일의 병합이 가능하다면, 가급적 각 컴포넌트는 각자의 파일로 분리하도록 한다.</li>
 </ul>
-<h2 id="로지스틱-회귀란"><a href="#로지스틱-회귀란" class="headerlink" title="로지스틱 회귀란"></a>로지스틱 회귀란</h2><p>: 로지스틱 회귀는 <code>이진분류</code>(Binary Classification) 문제의 해결에 사용되는 대표적인 알고리즘.</p>
-<blockquote>
-<p>이름은 ‘<strong>회귀</strong>‘이지만 ‘<code>분류</code>‘에 쓰인다</p>
-</blockquote>
         </div>
         
         
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/02/17/ai-start4/#more">Read More</a>
+                <a class="button is-size-7 is-light" href="/2020/03/20/vue-study2/#more">Read More</a>
                 </div>
             </div>
         </div>
@@ -209,8 +210,8 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2020/02/17/ai-start3/" class="image is-7by1">
-            <img class="thumbnail" src="/image/Elegant_Background-1.jpg" alt="[딥러닝 기초] 선형회귀 모델의 개선">
+        <a href="/2020/03/20/vue-study1/" class="image is-7by1">
+            <img class="thumbnail" src="/image/Elegant_Background-3.jpg" alt="Vue.js 코딩가이드 : Essential(Error Prevention)">
         </a>
     </div>
     
@@ -218,17 +219,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-17T00:36:45.000Z">2020-02-17</time>
+                <time class="level-item has-text-grey" datetime="2020-03-20T03:59:30.000Z">2020-03-20</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">인공지능</a>
+                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/Javascript/">Javascript</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/Javascript/Vue-js/">Vue.js</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    5분 소요 (약 725 글자)
+                    10분 소요 (약 1446 글자)
                 </span>
                 
                 
@@ -237,22 +238,21 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/02/17/ai-start3/">[딥러닝 기초] 선형회귀 모델의 개선</a>
+                <a class="has-link-black-ter" href="/2020/03/20/vue-study1/">Vue.js 코딩가이드 : Essential(Error Prevention)</a>
             
         </h1>
         <div class="content">
-            <p>다음의 책을 공부하며 정리한 내용입니다</p>
-<ul>
-<li><a href="https://wikidocs.net/book/2788" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/book/2788</a></li>
-</ul>
-<h2 id="nn-Module-을-사용한-선형회귀-모델의-개선"><a href="#nn-Module-을-사용한-선형회귀-모델의-개선" class="headerlink" title="nn.Module 을 사용한 선형회귀 모델의 개선"></a>nn.Module 을 사용한 선형회귀 모델의 개선</h2><p>: 파이토치에서 일부 모델(ex. 선형회귀모델)들은 이미 nn.Module의 형태로 편리하게 쓸 수 있도록 구현되어있다.</p>
+            <p>맨날 회사에서 Vue를 사용하지만 코딩 스타일 가이드를 정독한 적은 없는 관계로.. 조금 짬이 난 김에 한번 스타일가이드를 정리해보려 한다.</p>
+<p>참고한 문서는 <a href="https://vuejs.org/v2/style-guide/index.html" rel="external nofollow noopener noreferrer" target="_blank">Vue.js Official Style Guide</a> 이다.</p>
+<p>모든 가이드가 그렇듯, 절대적인 지표는 아니며 개발 방향을 정해주는 정도로 참고하면 되겠다. </p>
+<h1 id="Rule-Categories"><a href="#Rule-Categories" class="headerlink" title="Rule Categories"></a>Rule Categories</h1><p>이하의 룰들은 총 4가지 카테고리로 나뉘게 된다.</p>
         </div>
         
         
         <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/02/17/ai-start3/#more">Read More</a>
+                <a class="button is-size-7 is-light" href="/2020/03/20/vue-study1/#more">Read More</a>
                 </div>
             </div>
         </div>
@@ -268,284 +268,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/02/17/ai-start2/" class="image is-7by1">
-            <img class="thumbnail" src="/image/Elegant_Background-1.jpg" alt="[딥러닝 기초] Linear Regression">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-17T00:18:25.000Z">2020-02-17</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">인공지능</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    7분 소요 (약 1091 글자)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/02/17/ai-start2/">[딥러닝 기초] Linear Regression</a>
-            
-        </h1>
-        <div class="content">
-            <p>다음의 책을 공부하며 정리한 내용입니다</p>
-<ul>
-<li><a href="https://wikidocs.net/book/2788" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/book/2788</a></li>
-</ul>
-<h2 id="선형회귀란"><a href="#선형회귀란" class="headerlink" title="선형회귀란"></a>선형회귀란</h2><p>: 선형 회귀란 <code>학습 데이터와 가장 잘 맞는 하나의 직선</code>을 찾는 일.</p>
-<ul>
-<li>하나의 <code>직선</code>은 <code>W와 b</code>로 정의할 수 있다.</li>
-<li>선형 회귀의 목표: <code>가장 잘 맞는 직선</code>을 정의하는 <code>W와 b</code>의 값을 찾는 것.</li>
-</ul>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/02/17/ai-start2/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/02/17/ai-start1/" class="image is-7by1">
-            <img class="thumbnail" src="/image/Elegant_Background-1.jpg" alt="[딥러닝 기초] Pytorch 기본연산">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-17T00:08:25.000Z">2020-02-17</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">인공지능</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2분 소요 (약 339 글자)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/02/17/ai-start1/">[딥러닝 기초] Pytorch 기본연산</a>
-            
-        </h1>
-        <div class="content">
-            <p>다음의 책을 공부하며 정리한 내용입니다</p>
-<ul>
-<li><a href="https://wikidocs.net/book/2788" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/book/2788</a></li>
-</ul>
-<h2 id="Pytorch-기본-연산"><a href="#Pytorch-기본-연산" class="headerlink" title="Pytorch 기본 연산"></a>Pytorch 기본 연산</h2><p>: pytorch를 활용한 신경망 구성을 위해 필수적인 <strong>딥러닝 기본 연산단위</strong>를 알아보자.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/02/17/ai-start1/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/02/16/ai-study2/" class="image is-7by1">
-            <img class="thumbnail" src="/image/Elegant_Background-2.jpg" alt="[딥러닝 스터디] 자연어의 계산과 이해">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-16T07:42:21.000Z">2020-02-16</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">인공지능</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    23분 소요 (약 3517 글자)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/02/16/ai-study2/">[딥러닝 스터디] 자연어의 계산과 이해</a>
-            
-        </h1>
-        <div class="content">
-            <p>다음의 책을 공부하며 정리한 내용입니다</p>
-<ul>
-<li>한국어 임베딩 - 이기창</li>
-<li><a href="https://wikidocs.net/21668" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/21668</a></li>
-<li><a href="https://wikidocs.net/21687" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/21687</a></li>
-<li><a href="https://wikidocs.net/21692" rel="external nofollow noopener noreferrer" target="_blank">https://wikidocs.net/21692</a></li>
-</ul>
-<h2 id="2장-언어모델이란"><a href="#2장-언어모델이란" class="headerlink" title="2장. 언어모델이란"></a>2장. 언어모델이란</h2><p>: 자연어의 의미를 임베딩에 어떻게 녹여낼 수 있는가? 그 비결은 <code>자연어의 통계적 패턴</code> 을 통째로 임베딩에 넣는 것이다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/02/16/ai-study2/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/02/14/ai-study1/" class="image is-7by1">
-            <img class="thumbnail" src="/image/Elegant_Background-2.jpg" alt="[딥러닝 스터디] 임베딩이란">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-14T11:25:26.000Z">2020-02-14</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">인공지능</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    11분 소요 (약 1670 글자)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/02/14/ai-study1/">[딥러닝 스터디] 임베딩이란</a>
-            
-        </h1>
-        <div class="content">
-            <p>다음의 책을 공부하며 정리한 내용입니다</p>
-<ul>
-<li>한국어 임베딩 - 이기창</li>
-</ul>
-<h2 id="1장-임베딩이란"><a href="#1장-임베딩이란" class="headerlink" title="1장. 임베딩이란"></a>1장. 임베딩이란</h2><p>: 임베딩이란 <code>자연어를 벡터로 바꾼 결과</code> 혹은 <code>그 일련의 과정</code> 전체를 의미하는 용어이다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/02/14/ai-study1/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    
-<div class="card card-transparent">
-    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <div class="pagination-previous">
-            <a class="is-flex-grow has-text-black-ter" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">이전 글</a>
-        </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
-            <a class="is-flex-grow has-text-black-ter" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/page/3/">다음 글</a>
-        </div>
-        <ul class="pagination-list is-hidden-mobile">
-            
-            <li><a class="pagination-link has-text-black-ter" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">1</a></li>
-            
-            <li><a class="pagination-link is-current" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/page/2/">2</a></li>
-            
-        </ul>
-    </nav>
-</div>
 </div>
                 
 
