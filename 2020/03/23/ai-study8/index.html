@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="naver-site-verification" content="9abfedc8a2f9ddcb2cd0a96e6a2772ddc7b87e51">
+
+<link rel="canonical" href="https://katie0809.github.io/2020/03/23/ai-study8/">
+<title>[딥러닝 스터디] Attention을 활용한 기계번역(실습) - Dailycrush</title>
+
+
+    <meta name="description" content="텐서플로우 공식 가이드 중 Neural machine translation with attention 문서의 실습을 참고하였습니다. Neural machine translation with attention 스페인어에서 영어로 기계번역을 수행하는 seq2seq 모델을 직접 구현해본다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[딥러닝 스터디] Attention을 활용한 기계번역(실습)">
+<meta property="og:url" content="https://katie0809.github.io/2020/03/23/ai-study8/index.html">
+<meta property="og:site_name" content="Dailycrush">
+<meta property="og:description" content="텐서플로우 공식 가이드 중 Neural machine translation with attention 문서의 실습을 참고하였습니다. Neural machine translation with attention 스페인어에서 영어로 기계번역을 수행하는 seq2seq 모델을 직접 구현해본다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://katie0809.github.io/image/Elegant_Background-2.jpg">
+<meta property="article:published_time" content="2020-03-23T01:41:20.000Z">
+<meta property="article:modified_time" content="2020-05-08T06:45:29.089Z">
+<meta property="article:author" content="Kyungim Lee">
+<meta property="article:tag" content="pytorch">
+<meta property="article:tag" content="자연어처리">
+<meta property="article:tag" content="딥러닝">
+<meta property="article:tag" content="언어모델">
+<meta property="article:tag" content="한국어 임베딩">
+<meta property="article:tag" content="케라스">
+<meta property="article:tag" content="Attention">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://katie0809.github.io/image/Elegant_Background-2.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/vs2015.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158681991-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-158681991-1');
+</script>
+
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/rss2.xml" title="Dailycrush" type="application/rss+xml">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="[딥러닝 스터디] Attention을 활용한 기계번역(실습)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/downloads">Downloads</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="목차" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="검색" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/image/Elegant_Background-2.jpg" alt="[딥러닝 스터디] Attention을 활용한 기계번역(실습)">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-23T01:41:20.000Z">2020-03-23</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">개발자 공부</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">인공지능</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    18분 소요 (약 2773 글자)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                [딥러닝 스터디] Attention을 활용한 기계번역(실습)
+            
+        </h1>
+        <div class="content">
+            <p>텐서플로우 공식 가이드 중 <a href="https://www.tensorflow.org/tutorials/text/nmt_with_attention" rel="external nofollow noopener noreferrer" target="_blank">Neural machine translation with attention</a> 문서의 실습을 참고하였습니다.</p>
+<h1 id="Neural-machine-translation-with-attention"><a href="#Neural-machine-translation-with-attention" class="headerlink" title="Neural machine translation with attention"></a>Neural machine translation with attention</h1><ul>
+<li>스페인어에서 영어로 기계번역을 수행하는 seq2seq 모델을 직접 구현해본다.</li>
+</ul>
+<a id="more"></a>
+
+<p>기본적인 데이터의 처리 과정은 이전과 같다. 전처리 과정은 생략하고 실제 인코더-어텐션-디코더를 클래스 형태로 구현하는 부분의 코드를 분석해본다.</p>
+<h2 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h2><h3 id="1-클래스-설계"><a href="#1-클래스-설계" class="headerlink" title="1. 클래스 설계"></a>1. 클래스 설계</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Encoder</span><span class="params">(tf.keras.Model)</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, vocab_size, embedding_dim, enc_units, batch_sz)</span>:</span></span><br><span class="line">    super(Encoder, self).__init__()</span><br><span class="line">    self.batch_sz = batch_sz</span><br><span class="line">    self.enc_units = enc_units</span><br><span class="line">    self.embedding = tf.keras.layers.Embedding(vocab_size, embedding_dim)</span><br><span class="line">    self.gru = tf.keras.layers.GRU(self.enc_units,</span><br><span class="line">                                   return_sequences=<span class="literal">True</span>,</span><br><span class="line">                                   return_state=<span class="literal">True</span>,</span><br><span class="line">                                   recurrent_initializer=<span class="string">'glorot_uniform'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(self, x, hidden)</span>:</span></span><br><span class="line">    x = self.embedding(x)</span><br><span class="line">    output, state = self.gru(x, initial_state = hidden)</span><br><span class="line">    <span class="keyword">return</span> output, state</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize_hidden_state</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.zeros((self.batch_sz, self.enc_units))</span><br></pre></td></tr></table></figure>
+
+<p>[기본 파이썬 문법]</p>
+<ul>
+<li>class Encoder(<code>tf.keras.Model</code>) : Encoder 클래스는 tf.keras.Model 클래스를 상속</li>
+<li>__ init __ : 클래스 생성자. 객체 생성 시점에 자동 호출</li>
+<li>super(Encoder, self).__ init __() : 부모 클래스 초기화. <a href="[https://hashcode.co.kr/questions/6419/python3-super%EC%99%80-supera-self%EC%9D%98-%EC%B0%A8%EC%9D%B4%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%EC%9A%94](https://hashcode.co.kr/questions/6419/python3-super와-supera-self의-차이는-무엇인가요)">super()와 super(A, self)의 차이점</a> 참고</li>
+</ul>
+<p>[코드 분석]</p>
+<ul>
+<li><p>tf.keras.layers.Embedding()</p>
+<ul>
+<li>단어를 밀집벡터로 만드는 케라스 함수. 임베딩 층을 만든다.</li>
+<li><strong>( <code>샘플의 수(시퀀스 길이)</code>, <code>입력크기(단어집합 크기)</code>)</strong> 인 2D 텐서를 입력으로 받아 <strong>( <code>샘플의 수(시퀀스 길이)</code>, <code>입력크기(단어집합 크기)</code>, <code>임베딩 차원</code>)</strong> 인 3D 텐서를 반환한다.</li>
+<li>호출 위한 기본 파라미터는<br>: <code>input_dim</code>(단어집합 크기), <code>output_dim</code>(임베딩 차원) 이다.</li>
+</ul>
+</li>
+<li><p>tf.keras.layers.GRU()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tf.compat.v1.keras.layers.GRU(</span><br><span class="line">    units, activation=<span class="string">'tanh'</span>, recurrent_activation=<span class="string">'hard_sigmoid'</span>, use_bias=<span class="literal">True</span>,</span><br><span class="line">    kernel_initializer=<span class="string">'glorot_uniform'</span>, recurrent_initializer=<span class="string">'orthogonal'</span>,</span><br><span class="line">    bias_initializer=<span class="string">'zeros'</span>, kernel_regularizer=<span class="literal">None</span>, recurrent_regularizer=<span class="literal">None</span>,</span><br><span class="line">    bias_regularizer=<span class="literal">None</span>, activity_regularizer=<span class="literal">None</span>, kernel_constraint=<span class="literal">None</span>,</span><br><span class="line">    recurrent_constraint=<span class="literal">None</span>, bias_constraint=<span class="literal">None</span>, dropout=<span class="number">0.0</span>,</span><br><span class="line">    recurrent_dropout=<span class="number">0.0</span>, implementation=<span class="number">1</span>, return_sequences=<span class="literal">False</span>,</span><br><span class="line">    return_state=<span class="literal">False</span>, go_backwards=<span class="literal">False</span>, stateful=<span class="literal">False</span>, unroll=<span class="literal">False</span>,</span><br><span class="line">    reset_after=<span class="literal">False</span>, **kwargs</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><code>units</code></strong>: Positive integer, dimensionality of the output space. 출력 텐서의 차원.</li>
+<li><strong><code>return_sequences</code></strong>: Boolean. Whether to return the last output in the output sequence, or the full sequence. 모든 시점의 output을 출력할것인지(true), 아니면 최종 시점의 output만 출력할 것인지 결정.</li>
+<li><strong><code>return_state</code></strong>: Boolean. Whether to return the last state in addition to the output. 최종 시점의 output뿐만 아니라 최종 시점의 은닉상태도 출력할지를 결정</li>
+<li>호출 위한 기본 파라미터는<br>: <code>inputs</code> (3D tensor), training, initial_state</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-사용"><a href="#2-사용" class="headerlink" title="2. 사용"></a>2. 사용</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">encoder = Encoder(vocab_inp_size, embedding_dim, units, BATCH_SIZE)</span><br><span class="line"></span><br><span class="line"><span class="comment"># sample input</span></span><br><span class="line">sample_hidden = encoder.initialize_hidden_state()</span><br><span class="line">sample_output, sample_hidden = encoder(example_input_batch, sample_hidden)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'Encoder output shape: (batch size, sequence length, units) &#123;&#125;'</span>.format(sample_output.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'Encoder Hidden state shape: (batch size, units) &#123;&#125;'</span>.format(sample_hidden.shape))</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-코드분석-Embedding-layer의-통과"><a href="#3-코드분석-Embedding-layer의-통과" class="headerlink" title="3. 코드분석 - Embedding layer의 통과"></a>3. 코드분석 - Embedding layer의 통과</h3><p>위의 코드는 이전의 전처리를 수행해야 시행해볼 수 있다. 바로 인코더 모델의 모습만 확인해 볼 수 있도록 임의의 텐서를 만들어 모델 구조를 확인해보자.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Encoder</span><span class="params">(tf.keras.Model)</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, vocab_size, embedding_dim, enc_units, batch_sz)</span>:</span></span><br><span class="line">    super(Encoder, self).__init__()</span><br><span class="line">    self.batch_sz = batch_sz</span><br><span class="line">    self.enc_units = enc_units</span><br><span class="line">    self.embedding = tf.keras.layers.Embedding(vocab_size, embedding_dim)</span><br><span class="line">    self.rnn = tf.keras.layers.SimpleRNN(self.enc_units,</span><br><span class="line">                                   return_sequences=<span class="literal">True</span>,</span><br><span class="line">                                   return_state=<span class="literal">True</span>,</span><br><span class="line">                                   recurrent_initializer=<span class="string">'glorot_uniform'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(self, x, hidden)</span>:</span></span><br><span class="line">    x = self.embedding(x)</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">'Encoder input shape: &#123;&#125;'</span>.format(x.shape))</span><br><span class="line">    output, state = self.rnn(x, initial_state = hidden)</span><br><span class="line">    <span class="keyword">return</span> output, state</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize_hidden_state</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.zeros((self.batch_sz, self.enc_units))</span><br><span class="line"></span><br><span class="line">example_input_batch = tf.zeros((<span class="number">3</span>, <span class="number">7</span>))</span><br><span class="line">encoder = Encoder(<span class="number">12</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment"># sample input</span></span><br><span class="line">sample_hidden = encoder.initialize_hidden_state()</span><br><span class="line">sample_output, sample_hidden = encoder(example_input_batch, sample_hidden)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'Encoder output shape: (batch size, sequence length, units) &#123;&#125;'</span>.format(sample_output.shape))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'Encoder Hidden state shape: (batch size, units) &#123;&#125;'</span>.format(sample_hidden.shape))</span><br><span class="line"></span><br><span class="line">encoder.summary()</span><br></pre></td></tr></table></figure>
+
+<p>위의 코드는 </p>
+<ol>
+<li>단어집합 크기 : 12</li>
+<li>임베딩 차원 : 4</li>
+<li>은닉상태의 크기 : 6</li>
+<li>배치크기 : 3</li>
+</ol>
+<p>인 경우이다. 이때 입력 배치는 (3, 7)의 텐서이다. 공부를 하면서 헷갈리는 부분이 있어서 텐서의 크기를 단어집합 크기와 동일하게 3, 12로 잡고 싶었는데 그렇게 하면 out of bound 인덱스 오류가 나더라. 즉, 모델의 단어집합 크기와 동일한 크기의 텐서를 초기 입력으로 넣을 수 없는 듯 하다. 어쩔 수 없이 만든 그림은 (1) 모델의 단어집합 크기가 12인 경우 모델의 모습 과 (2) 모델의 초기 입력 텐서의 크기가 (3(=batch_sz), 12)인 경우 두개의 짬뽕이 되어버림.</p>
+<p>위의 코드를 시행하면 아래의 결과가 나온다.</p>
+<p><img src="/image/Untitled_-_Colaboratory.png" alt="Untitled_-_Colaboratory"></p>
+<h4 id="임베딩-레이어"><a href="#임베딩-레이어" class="headerlink" title="임베딩 레이어"></a>임베딩 레이어</h4><p><img src="/image/nlp_visualize7.png" alt="자연어처리_시각화-8320429"></p>
+<p>케라스의 Embedding 함수는 단어집합의 크기와 임베딩 차원을 변수로 받아 임베딩 레이어를 만들어준다. 이때 레이어에 모델을 추가하는 것과 모델에 들어가는 텐서는 별도이다. 난 이 개념을 이해하는게 넘나 어려웠다..ㅋㅋㅋㅠ</p>
+<p>이게 뭔말인고 하니… 위의 그림은 시퀀스 길이가 12, 시퀀스 개수가 3, 임베딩 차원이 4인 경우 Embedding Layer를 통과했을때 텐서의 크기변환 시각화이다. </p>
+<p>즉, 아래와 같은 예시가 있다고 가정하자.</p>
+<p>[[I, am, studying, neural, language, machine, translation, in, a, cafe, near, home], [I, am, studying, language], [neural, machine, translation]]</p>
+<p>이때 각 시퀀스를 12의 길이로 패딩해주자.</p>
+<p>[    [I, am, studying, neural, language, machine, translation, in, a, cafe, near, home], </p>
+<p>​    [I, am, studying, language, <pad>, <pad>, <pad>, <pad>, <pad>, <pad>, <pad>, <pad>], </pad></pad></pad></pad></pad></pad></pad></pad></p>
+<p>​    [neural, machine, translation, <pad>, <pad>, <pad>, <pad>, <pad>, <pad>, <pad>, <pad>, <pad>]]</pad></pad></pad></pad></pad></pad></pad></pad></pad></p>
+<p>패딩된 시퀀스를 정수 인코딩해주면 대충 아래처럼 된다.</p>
+<p>[[1, 2, 3, …, 12], [1, 2, 3, 5, 0, 0, … 0], [4, 6, 7, 0, 0….. 0]]</p>
+<p>= 크기 (3, 12)</p>
+<p>그럼 이 (3, 12)의 텐서가 Embedding(단어집합 크기, 임베딩차원) 으로 만들어진 임베딩 레이어에 들어가는거다. </p>
+<p>이때 단어집합의 크기를 14라고 하면(단어장 개수 + <unk> + <pad>) 해당 텐서가 들어가는 <code>임베딩 레이어 모델</code> 에는 임베딩 작업을 위한 <code>룩업 테이블</code> 이 생성되고, 이때 이 룩업테이블의 크기는 <code>임베딩 레이어의 파라미터의 개수</code> 가 된다.</pad></unk></p>
+<blockquote>
+<dl><dt>num of parameters in Embedding layer</dt><dd><code>14(vocab sz) * 4(embedding dim)</code> </dd></dl></blockquote>
+<p><img src="/image/nlp_visualize5.png" alt="자연어처리_시각화-8321348"></p>
+<p>위의 코드에서는 example_input_batch가 입력으로 들어가는데 코드 설명을 보면 (64, 16)의 크기이며 단어장 크기는 9000정도라고 한다. 또한 임베딩 차원은 256이라고 한다.</p>
+<p>그럼 결국 다음과 같다.</p>
+<ul>
+<li>길이가 16인 시퀀스가 64개 있다. : 16개의 단어로 이뤄진 문장이 64개</li>
+<li>(64, 16)인 이 입력텐서는 임베딩 레이어를 거치면 (64, 16, 9000) 이 된다.</li>
+<li>임베딩 레이어의 파라미터 개수는 9000 * 256</li>
+</ul>
+<h3 id="4-코드분석-RNN-은닉층의-통과"><a href="#4-코드분석-RNN-은닉층의-통과" class="headerlink" title="4. 코드분석 - RNN 은닉층의 통과"></a>4. 코드분석 - RNN 은닉층의 통과</h3><p>원본 코드에서는 GRU를 사용했지만 보다 용이한 (나의)이해를 위해 사용하는 은닉층을 SimpleRNN으로 변경해보았다.</p>
+<p>아까 위에서 임베딩 층을 통과하면서 (시퀀스 개수, 시퀀스 길이, 임베딩 차원) 으로 변환된 텐서는 RNN의 입력으로 들어가게 된다.</p>
+<p><img src="/image/nlp_visualize1.png" alt="자연어처리_시각화-8321950"></p>
+<p>그리고 은닉층을 통과한 텐서는 위의 그림처럼 변환되게 된다. 이때 <em>units</em> 은 <code>은닉층의 크기</code> 를 의미한다. 은닉층의 파라미터는 아래 그림과 같다.</p>
+<ol>
+<li><img src="/image/nlp_visualize2.png" alt="자연어처리_시각화-8322229"></li>
+<li><img src="/image/nlp_visualize3.png" alt="자연어처리_시각화-8322259"></li>
+</ol>
+<p>1번 그림의 vocab_sz는 sequence length인데 바꾸기가 귀찮았다. 여튼 내가 이해한 것은 이랬고, 결국 두개를 합쳐서 그려보면 아래와 같아진다.</p>
+<p><img src="/image/nlp_visualize4.png" alt="자연어처리_시각화-8322406"></p>
+<p>중간의 (3, 6) 텐서가 현재시점의 은닉상태이다. 즉, hidden state의 shape은 (num of sequence, 은닉상태 크기) 이다.</p>
+<h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><h3 id="1-클래스-설계-1"><a href="#1-클래스-설계-1" class="headerlink" title="1. 클래스 설계"></a>1. 클래스 설계</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BahdanauAttention</span><span class="params">(tf.keras.layers.Layer)</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, units)</span>:</span></span><br><span class="line">    super(BahdanauAttention, self).__init__()</span><br><span class="line">    self.W1 = tf.keras.layers.Dense(units)</span><br><span class="line">    self.W2 = tf.keras.layers.Dense(units)</span><br><span class="line">    self.V = tf.keras.layers.Dense(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(self, query, values)</span>:</span></span><br><span class="line">    <span class="comment"># query hidden state shape == (batch_size, hidden size)</span></span><br><span class="line">    <span class="comment"># query_with_time_axis shape == (batch_size, 1, hidden size)</span></span><br><span class="line">    <span class="comment"># values shape == (batch_size, max_len, hidden size)</span></span><br><span class="line">    <span class="comment"># we are doing this to broadcast addition along the time axis to calculate the score</span></span><br><span class="line">    query_with_time_axis = tf.expand_dims(query, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># score shape == (batch_size, max_length, 1)</span></span><br><span class="line">    <span class="comment"># we get 1 at the last axis because we are applying score to self.V</span></span><br><span class="line">    <span class="comment"># the shape of the tensor before applying self.V is (batch_size, max_length, units)</span></span><br><span class="line">    score = self.V(tf.nn.tanh(</span><br><span class="line">        self.W1(query_with_time_axis) + self.W2(values)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># attention_weights shape == (batch_size, max_length, 1)</span></span><br><span class="line">    attention_weights = tf.nn.softmax(score, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># context_vector shape after sum == (batch_size, hidden_size)</span></span><br><span class="line">    context_vector = attention_weights * values</span><br><span class="line">    context_vector = tf.reduce_sum(context_vector, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> context_vector, attention_weights</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-사용-1"><a href="#2-사용-1" class="headerlink" title="2. 사용"></a>2. 사용</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">attention_layer = BahdanauAttention(<span class="number">10</span>)</span><br><span class="line">attention_result, attention_weights = attention_layer(sample_hidden, sample_output)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Attention result shape: (batch size, units) &#123;&#125;"</span>.format(attention_result.shape))</span><br><span class="line">print(<span class="string">"Attention weights shape: (batch_size, sequence_length, 1) &#123;&#125;"</span>.format(attention_weights.shape))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h2><h3 id="1-클래스-설계-2"><a href="#1-클래스-설계-2" class="headerlink" title="1. 클래스 설계"></a>1. 클래스 설계</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Decoder</span><span class="params">(tf.keras.Model)</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, vocab_size, embedding_dim, dec_units, batch_sz)</span>:</span></span><br><span class="line">    super(Decoder, self).__init__()</span><br><span class="line">    self.batch_sz = batch_sz</span><br><span class="line">    self.dec_units = dec_units</span><br><span class="line">    self.embedding = tf.keras.layers.Embedding(vocab_size, embedding_dim)</span><br><span class="line">    self.gru = tf.keras.layers.GRU(self.dec_units,</span><br><span class="line">                                   return_sequences=<span class="literal">True</span>,</span><br><span class="line">                                   return_state=<span class="literal">True</span>,</span><br><span class="line">                                   recurrent_initializer=<span class="string">'glorot_uniform'</span>)</span><br><span class="line">    self.fc = tf.keras.layers.Dense(vocab_size)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># used for attention</span></span><br><span class="line">    self.attention = BahdanauAttention(self.dec_units)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(self, x, hidden, enc_output)</span>:</span></span><br><span class="line">    <span class="comment"># enc_output shape == (batch_size, max_length, hidden_size)</span></span><br><span class="line">    context_vector, attention_weights = self.attention(hidden, enc_output)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># x shape after passing through embedding == (batch_size, 1, embedding_dim)</span></span><br><span class="line">    x = self.embedding(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># x shape after concatenation == (batch_size, 1, embedding_dim + hidden_size)</span></span><br><span class="line">    x = tf.concat([tf.expand_dims(context_vector, <span class="number">1</span>), x], axis=<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># passing the concatenated vector to the GRU</span></span><br><span class="line">    output, state = self.gru(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># output shape == (batch_size * 1, hidden_size)</span></span><br><span class="line">    output = tf.reshape(output, (<span class="number">-1</span>, output.shape[<span class="number">2</span>]))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># output shape == (batch_size, vocab)</span></span><br><span class="line">    x = self.fc(output)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> x, state, attention_weights</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-사용-2"><a href="#2-사용-2" class="headerlink" title="2. 사용"></a>2. 사용</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">decoder = Decoder(vocab_tar_size, embedding_dim, units, BATCH_SIZE)</span><br><span class="line"></span><br><span class="line">sample_decoder_output, _, _ = decoder(tf.random.uniform((BATCH_SIZE, <span class="number">1</span>)),</span><br><span class="line">                                      sample_hidden, sample_output)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (<span class="string">'Decoder output shape: (batch_size, vocab size) &#123;&#125;'</span>.format(sample_decoder_output.shape))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="The-optimizer-and-the-loss-function"><a href="#The-optimizer-and-the-loss-function" class="headerlink" title="The optimizer and the loss function"></a>The optimizer and the loss function</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">optimizer = tf.keras.optimizers.Adam()</span><br><span class="line">loss_object = tf.keras.losses.SparseCategoricalCrossentropy(</span><br><span class="line">    from_logits=<span class="literal">True</span>, reduction=<span class="string">'none'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss_function</span><span class="params">(real, pred)</span>:</span></span><br><span class="line">  mask = tf.math.logical_not(tf.math.equal(real, <span class="number">0</span>))</span><br><span class="line">  loss_ = loss_object(real, pred)</span><br><span class="line"></span><br><span class="line">  mask = tf.cast(mask, dtype=loss_.dtype)</span><br><span class="line">  loss_ *= mask</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> tf.reduce_mean(loss_)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Checkpoints"><a href="#Checkpoints" class="headerlink" title="Checkpoints"></a>Checkpoints</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">checkpoint_dir = <span class="string">'./training_checkpoints'</span></span><br><span class="line">checkpoint_prefix = os.path.join(checkpoint_dir, <span class="string">"ckpt"</span>)</span><br><span class="line">checkpoint = tf.train.Checkpoint(optimizer=optimizer,</span><br><span class="line">                                 encoder=encoder,</span><br><span class="line">                                 decoder=decoder)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@tf.function</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_step</span><span class="params">(inp, targ, enc_hidden)</span>:</span></span><br><span class="line">  loss = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">    enc_output, enc_hidden = encoder(inp, enc_hidden)</span><br><span class="line"></span><br><span class="line">    dec_hidden = enc_hidden</span><br><span class="line"></span><br><span class="line">    dec_input = tf.expand_dims([targ_lang.word_index[<span class="string">'&lt;start&gt;'</span>]] * BATCH_SIZE, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Teacher forcing - feeding the target as the next input</span></span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> range(<span class="number">1</span>, targ.shape[<span class="number">1</span>]):</span><br><span class="line">      <span class="comment"># passing enc_output to the decoder</span></span><br><span class="line">      predictions, dec_hidden, _ = decoder(dec_input, dec_hidden, enc_output)</span><br><span class="line"></span><br><span class="line">      loss += loss_function(targ[:, t], predictions)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># using teacher forcing</span></span><br><span class="line">      dec_input = tf.expand_dims(targ[:, t], <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">  batch_loss = (loss / int(targ.shape[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">  variables = encoder.trainable_variables + decoder.trainable_variables</span><br><span class="line"></span><br><span class="line">  gradients = tape.gradient(loss, variables)</span><br><span class="line"></span><br><span class="line">  optimizer.apply_gradients(zip(gradients, variables))</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> batch_loss</span><br><span class="line">  </span><br><span class="line">  EPOCHS = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(EPOCHS):</span><br><span class="line">  start = time.time()</span><br><span class="line"></span><br><span class="line">  enc_hidden = encoder.initialize_hidden_state()</span><br><span class="line">  total_loss = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (batch, (inp, targ)) <span class="keyword">in</span> enumerate(dataset.take(steps_per_epoch)):</span><br><span class="line">    batch_loss = train_step(inp, targ, enc_hidden)</span><br><span class="line">    total_loss += batch_loss</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> batch % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">      print(<span class="string">'Epoch &#123;&#125; Batch &#123;&#125; Loss &#123;:.4f&#125;'</span>.format(epoch + <span class="number">1</span>,</span><br><span class="line">                                                   batch,</span><br><span class="line">                                                   batch_loss.numpy()))</span><br><span class="line">  <span class="comment"># saving (checkpoint) the model every 2 epochs</span></span><br><span class="line">  <span class="keyword">if</span> (epoch + <span class="number">1</span>) % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">    checkpoint.save(file_prefix = checkpoint_prefix)</span><br><span class="line"></span><br><span class="line">  print(<span class="string">'Epoch &#123;&#125; Loss &#123;:.4f&#125;'</span>.format(epoch + <span class="number">1</span>,</span><br><span class="line">                                      total_loss / steps_per_epoch))</span><br><span class="line">  print(<span class="string">'Time taken for 1 epoch &#123;&#125; sec\n'</span>.format(time.time() - start))</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Attention/" rel="tag">Attention</a>, <a class="has-link-grey -link" href="/tags/pytorch/" rel="tag">pytorch</a>, <a class="has-link-grey -link" href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D/" rel="tag">딥러닝</a>, <a class="has-link-grey -link" href="/tags/%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8/" rel="tag">언어모델</a>, <a class="has-link-grey -link" href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC/" rel="tag">자연어처리</a>, <a class="has-link-grey -link" href="/tags/%EC%BC%80%EB%9D%BC%EC%8A%A4/" rel="tag">케라스</a>, <a class="has-link-grey -link" href="/tags/%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%9E%84%EB%B2%A0%EB%94%A9/" rel="tag">한국어 임베딩</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/06/08/tf-study1/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Tensorflow 개발자 자격증 준비하기(1)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/20/vue-study2/">
+                <span class="level-item">Vue.js 코딩가이드 : Strongly Recommended (Improving Readability)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">댓글</h3>
+        <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ko/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-comments" data-width="100%" data-href="https://katie0809.github.io/2020/03/23/ai-study8/" data-num-posts="5"></div>
+<link rel="stylesheet" href="/css/facebook.css">
+    </div>
+</div>
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    목차
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#Neural-machine-translation-with-attention">
+        <span class="has-mr-6">1</span>
+        <span>Neural machine translation with attention</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Encoder">
+        <span class="has-mr-6">1.1</span>
+        <span>Encoder</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#1-클래스-설계">
+        <span class="has-mr-6">1.1.1</span>
+        <span>1. 클래스 설계</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-사용">
+        <span class="has-mr-6">1.1.2</span>
+        <span>2. 사용</span>
+        </a></li><li>
+        <a class="is-flex" href="#3-코드분석-Embedding-layer의-통과">
+        <span class="has-mr-6">1.1.3</span>
+        <span>3. 코드분석 - Embedding layer의 통과</span>
+        </a></li><li>
+        <a class="is-flex" href="#4-코드분석-RNN-은닉층의-통과">
+        <span class="has-mr-6">1.1.4</span>
+        <span>4. 코드분석 - RNN 은닉층의 통과</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Attention">
+        <span class="has-mr-6">1.2</span>
+        <span>Attention</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#1-클래스-설계-1">
+        <span class="has-mr-6">1.2.1</span>
+        <span>1. 클래스 설계</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-사용-1">
+        <span class="has-mr-6">1.2.2</span>
+        <span>2. 사용</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#Decoder">
+        <span class="has-mr-6">1.3</span>
+        <span>Decoder</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#1-클래스-설계-2">
+        <span class="has-mr-6">1.3.1</span>
+        <span>1. 클래스 설계</span>
+        </a></li><li>
+        <a class="is-flex" href="#2-사용-2">
+        <span class="has-mr-6">1.3.2</span>
+        <span>2. 사용</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#The-optimizer-and-the-loss-function">
+        <span class="has-mr-6">1.4</span>
+        <span>The optimizer and the loss function</span>
+        </a></li><li>
+        <a class="is-flex" href="#Checkpoints">
+        <span class="has-mr-6">1.5</span>
+        <span>Checkpoints</span>
+        </a></li><li>
+        <a class="is-flex" href="#Training">
+        <span class="has-mr-6">1.6</span>
+        <span>Training</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/">
+            <span class="level-start">
+                <span class="level-item">개발자 공부</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">36</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/JSP/">
+            <span class="level-start">
+                <span class="level-item">JSP</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/Javascript/">
+            <span class="level-start">
+                <span class="level-item">Javascript</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/">
+            <span class="level-start">
+                <span class="level-item">인공지능</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">24</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EB%B6%80/%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8/">
+            <span class="level-start">
+                <span class="level-item">코딩테스트</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/">
+            <span class="level-start">
+                <span class="level-item">그냥 그런 일상</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/%EA%B7%B8%EB%A0%87%EA%B2%8C-%EB%B0%94%EB%B3%B4%EB%8A%94-%EC%95%84%EB%8B%98/">
+            <span class="level-start">
+                <span class="level-item">그렇게 바보는 아님</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%EA%B7%B8%EB%83%A5-%EA%B7%B8%EB%9F%B0-%EC%9D%BC%EC%83%81/%EB%81%84%EC%A0%81%EB%81%84%EC%A0%81/">
+            <span class="level-start">
+                <span class="level-item">끄적끄적</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Attention/" style="font-size: 12px;">Attention</a> <a href="/tags/ES2015/" style="font-size: 10px;">ES2015+</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Keras/" style="font-size: 10px;">Keras</a> <a href="/tags/RNN/" style="font-size: 13px;">RNN</a> <a href="/tags/YAMLException/" style="font-size: 10px;">YAMLException</a> <a href="/tags/api-server/" style="font-size: 10px;">api_server</a> <a href="/tags/change-permission/" style="font-size: 10px;">change permission</a> <a href="/tags/codility/" style="font-size: 14px;">codility</a> <a href="/tags/coding-rule/" style="font-size: 11px;">coding rule</a> <a href="/tags/coding-test/" style="font-size: 14px;">coding test</a> <a href="/tags/dacon/" style="font-size: 10px;">dacon</a> <a href="/tags/developer/" style="font-size: 14px;">developer</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/folder-permission/" style="font-size: 10px;">folder permission</a> <a href="/tags/githubpage/" style="font-size: 10px;">githubpage</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/inflearn/" style="font-size: 10px;">inflearn</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/jsp/" style="font-size: 10px;">jsp</a> <a href="/tags/linear-regression/" style="font-size: 11px;">linear regression</a> <a href="/tags/logistic-regression/" style="font-size: 10px;">logistic regression</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/numpy/" style="font-size: 11px;">numpy</a> <a href="/tags/nuxtjs/" style="font-size: 11px;">nuxtjs</a> <a href="/tags/python/" style="font-size: 11px;">python</a> <a href="/tags/pytorch/" style="font-size: 19px;">pytorch</a> <a href="/tags/style-guide/" style="font-size: 11px;">style guide</a> <a href="/tags/tensorflow/" style="font-size: 18px;">tensorflow</a> <a href="/tags/tensorflow-2-0/" style="font-size: 10px;">tensorflow 2.0</a> <a href="/tags/tensorflow-developer-certification/" style="font-size: 16px;">tensorflow developer certification</a> <a href="/tags/torchtext/" style="font-size: 10px;">torchtext</a> <a href="/tags/vue/" style="font-size: 11px;">vue</a> <a href="/tags/vuejs/" style="font-size: 13px;">vuejs</a> <a href="/tags/vueschool-io/" style="font-size: 11px;">vueschool.io</a> <a href="/tags/%EA%B7%B8%EB%9E%98%ED%94%84-%EC%8B%9C%EA%B0%81%ED%99%94/" style="font-size: 10px;">그래프 시각화</a> <a href="/tags/%EB%8D%B0%EC%9D%B4%EC%BD%98/" style="font-size: 10px;">데이콘</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D/" style="font-size: 18px;">딥러닝</a> <a href="/tags/%EB%94%A5%EB%9F%AC%EB%8B%9D%EA%B8%B0%EC%B4%88/" style="font-size: 16px;">딥러닝기초</a> <a href="/tags/%EB%A1%9C%EC%A7%80%EC%8A%A4%ED%8B%B1-%ED%9A%8C%EA%B7%80/" style="font-size: 10px;">로지스틱 회귀</a> <a href="/tags/%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80/" style="font-size: 11px;">선형회귀</a> <a href="/tags/%EC%88%9C%ED%99%98%EC%8B%A0%EA%B2%BD%EB%A7%9D/" style="font-size: 12px;">순환신경망</a> <a href="/tags/%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8/" style="font-size: 17px;">언어모델</a> <a href="/tags/%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5/" style="font-size: 17px;">인공지능</a> <a href="/tags/%EC%9E%90%EA%B2%A9%EC%A6%9D/" style="font-size: 16px;">자격증</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4-%EC%A0%84%EC%B2%98%EB%A6%AC/" style="font-size: 11px;">자연어 전처리</a> <a href="/tags/%EC%9E%90%EC%97%B0%EC%96%B4%EC%B2%98%EB%A6%AC/" style="font-size: 20px;">자연어처리</a> <a href="/tags/%EC%BC%80%EB%9D%BC%EC%8A%A4/" style="font-size: 12px;">케라스</a> <a href="/tags/%ED%95%9C%EA%B5%AD%EC%96%B4-%EC%9E%84%EB%B2%A0%EB%94%A9/" style="font-size: 15px;">한국어 임베딩</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="[딥러닝 스터디] Attention을 활용한 기계번역(실습)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 Kyungim Lee&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external nofollow noopener noreferrer">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/katie0809">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("ko");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://katie0809.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" rel="external nofollow noopener noreferrer" target="_blank">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '포스트',
+                PAGES: '페이지',
+                CATEGORIES: '카테고리',
+                TAGS: '태그',
+                UNTITLED: '(제목없음)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
